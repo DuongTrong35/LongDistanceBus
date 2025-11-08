@@ -14,3 +14,18 @@ export async function loginApi(payload: LoginReq): Promise<AuthResp> {
   }
   return res.json();
 }
+
+// --- NEW: lấy danh sách bến, tìm theo tên ---
+export async function getStations(): Promise<{id:number; name:string}[]> {
+  return apiGet("/api/stations");
+}
+
+// --- NEW: tìm chuyến ---
+export async function searchTrips(params: { fromId: number; toId: number; date: string }) {
+  const q = new URLSearchParams({
+    fromId: String(params.fromId),
+    toId: String(params.toId),
+    date: params.date,                       // YYYY-MM-DD
+  });
+  return apiGet(`/api/trips/search?${q.toString()}`);
+}

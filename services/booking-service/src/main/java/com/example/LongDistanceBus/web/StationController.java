@@ -8,7 +8,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/stations")
-@CrossOrigin(origins = "http://localhost:5173") // cho FE Vite
 public class StationController {
     private final StationRepository repo;
     public StationController(StationRepository repo){ this.repo = repo; }

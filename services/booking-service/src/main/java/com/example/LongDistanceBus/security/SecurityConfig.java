@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // Public cho auth
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
 
                         // (Tuỳ bạn) Nếu cần public tra cứu tuyến/bến:
                         // .requestMatchers(HttpMethod.GET, "/api/stations/**").permitAll()

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { login as loginApi } from "../lib/authApi";
 
 export default function Login() {
-  const { login } = useAuth();
+  const { login: loginCtx } = useAuth();
   const nav = useNavigate();
   const loc = useLocation() as any;
   const [emailOrPhone, setEmailOrPhone] = useState("");
@@ -16,8 +17,11 @@ export default function Login() {
     setErr(null);
     setBusy(true);
     try {
-      await login(emailOrPhone, password);
-      // quay về trang trước khi bị chặn, nếu có
+      const data = await loginApi({ email: emailOrPhone, password });
+      // lưu token tạm để UI biết đã đăng nhập (sẽ chuẩn hoá bằng AuthContext ở bước sau)
+      if (data?.accessToken) {
+        localStorage.setItem("accessToken", data.accessToken);
+      }
       const redirect = loc.state?.from?.pathname || "/";
       nav(redirect, { replace: true });
     } catch (ex: any) {

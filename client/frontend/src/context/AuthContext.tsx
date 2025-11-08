@@ -1,49 +1,47 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
+import { loginApi, setToken as saveToken, clearToken, getToken } from "../lib/api";
 
-type AuthResp = { accessToken: string; fullName: string };
-type AuthState = {
-  token: string | null;
+type AuthState = { fullName: string | null };
+type AuthCtx = {
   fullName: string | null;
-  setAuth: (a: AuthResp | null) => void;
+  isAuthed: boolean;
+  login: (emailOrPhone: string, password: string) => Promise<void>;
+  logout: () => void;
 };
 
-const Ctx = createContext<AuthState | null>(null);
+const Ctx = createContext<AuthCtx | null>(null);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const safeGet = (k: string) => {
-    try { return localStorage.getItem(k); } catch { return null; }
-  };
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [fullName, setFullName] = useState<string | null>(null);
 
-  const [token, setToken] = useState<string | null>(() => safeGet('token'));
-  const [fullName, setFullName] = useState<string | null>(() => safeGet('fullName'));
+  // Khôi phục phiên khi F5 (tên lưu ở localStorage)
+  useEffect(() => {
+    const stored = localStorage.getItem("fullName");
+    if (stored && getToken()) setFullName(stored);
+  }, []);
 
-  const setAuth = (a: AuthResp | null) => {
-    try {
-      if (a) {
-        setToken(a.accessToken);
-        setFullName(a.fullName);
-        localStorage.setItem('token', a.accessToken);
-        localStorage.setItem('fullName', a.fullName);
-      } else {
-        setToken(null);
-        setFullName(null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('fullName');
-      }
-    } catch {
-      // ignore storage errors in dev
-    }
-  };
+  async function login(emailOrPhone: string, password: string) {
+    const res = await loginApi({ emailOrPhone, password });
+    saveToken(res.accessToken);                 // lưu JWT
+    localStorage.setItem("fullName", res.fullName);
+    setFullName(res.fullName);
+  }
+
+  function logout() {
+    clearToken();
+    localStorage.removeItem("fullName");
+    setFullName(null);
+  }
 
   return (
-    <Ctx.Provider value={{ token, fullName, setAuth }}>
+    <Ctx.Provider value={{ fullName, isAuthed: !!fullName, login, logout }}>
       {children}
     </Ctx.Provider>
   );
-};
+}
 
-export const useAuth = () => {
-  const v = useContext(Ctx);
-  if (!v) throw new Error('useAuth must be used inside AuthProvider');
-  return v;
-};
+export function useAuth() {
+  const ctx = useContext(Ctx);
+  if (!ctx) throw new Error("AuthContext missing");
+  return ctx;
+}

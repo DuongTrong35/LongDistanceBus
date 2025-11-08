@@ -2,41 +2,55 @@ package com.example.LongDistanceBus.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
-import java.util.Map;
 
 @Service
 public class JwtService {
 
-    private final Key key;
-    private final long ttlMs;
+    @Value("${app.jwt.secret:change-this-demo-secret-change-this-demo-secret}")
+    private String secret;
 
-    public JwtService(@Value("${app.jwt.secret}") String secret,
-                      @Value("${app.jwt.access-ttl-minutes}") long ttlMinutes) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        this.ttlMs = ttlMinutes * 60_000;
+    @Value("${app.jwt.ttlMillis:900000}") // 15 phút
+    private long ttlMillis;
+
+    private Key key;
+
+    @PostConstruct
+    void init() {
+        // secret >= 256-bit cho HS256
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generate(String subject, Map<String,Object> claims) {
+    public String generate(String subject, java.util.Map<String, Object> claims) {
         long now = System.currentTimeMillis();
         return Jwts.builder()
+                .setClaims(claims)
                 .setSubject(subject)
-                .addClaims(claims)
                 .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + ttlMs))
+                .setExpiration(new Date(now + ttlMillis))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public Jws<Claims> parse(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token);
+    public String extractUsername(String token) {
+        return parse(token).getBody().getSubject();
+    }
+
+    public boolean isValid(String token) {
+        try {
+            parse(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    private Jws<Claims> parse(String token) {
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
     }
 }

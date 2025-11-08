@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import "./home.css"; // (tạo file ở bước 2)
+import { loginApi } from '../lib/api';
+import { useAuth } from "../context/AuthContext";
+import "./home.css";
 
 export default function Home() {
   const nav = useNavigate();

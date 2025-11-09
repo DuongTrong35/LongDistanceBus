@@ -15,4 +15,8 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
             LocalDateTime start,
             LocalDateTime end
     );
+
+    List<Trip> findByRoute_FromStation_NameAndRoute_ToStation_NameAndDepartureTimeBetween(
+            String from, String to, LocalDateTime start, LocalDateTime end);
+
 }

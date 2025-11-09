@@ -1,72 +1,51 @@
+<!-- pom.xml ở ROOT -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- ĐẶT parent là Spring Boot 3.4.x -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.1</version>
+        <relativePath/>
+    </parent>
 
     <groupId>com.longdistancebus</groupId>
     <artifactId>longdistancebus-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>gateway</module>
-        <module>services/booking-service</module>
-    </modules>
-
     <properties>
         <java.version>17</java.version>
-        <spring.boot.version>3.3.4</spring.boot.version>
-        <spring.cloud.version>2023.0.3</spring.cloud.version>
-
-        <!-- QUAN TRỌNG: ép Maven đọc/ghi UTF-8 -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- Dự phòng cho compiler -->
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <spring-cloud.version>2024.0.0</spring-cloud.version>
     </properties>
 
+    <!-- BOM Spring Cloud -->
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <!-- Ép compile bằng Java 17 + UTF-8 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.13.0</version>
-                    <configuration>
-                        <!-- 'release' đảm bảo API/bytecode 17 -->
-                        <release>17</release>
-                        <encoding>UTF-8</encoding>
-                    </configuration>
-                </plugin>
+    <modules>
+        <module>gateway</module>
+        <module>services/booking-service</module>
+    </modules>
 
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 </project>
-

@@ -94,3 +94,20 @@ WHERE r.from_station_id = fs.id AND r.to_station_id = ts.id
     WHERE t.route_id = r.id AND t.bus_id=b.id
       AND t.departure_time = CONCAT(DATE_ADD(CURDATE(), INTERVAL 1 DAY), ' 19:30:00')
   );
+
+-- Stations
+SELECT id, name FROM stations;
+
+-- Routes
+SELECT r.id, fs.name AS from_station, ts.name AS to_station
+FROM routes r
+JOIN stations fs ON r.from_station_id = fs.id
+JOIN stations ts ON r.to_station_id = ts.id;
+
+-- Buses
+SELECT id, name, plate, seat_count FROM buses;
+
+-- Trips (hôm nay/ngày mai theo CURDATE())
+SELECT id, route_id, bus_id, departure_time, arrival_time, price
+FROM trips
+ORDER BY departure_time;

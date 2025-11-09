@@ -1,64 +1,41 @@
 package com.example.LongDistanceBus.auth;
 
-import com.example.LongDistanceBus.auth.dto.AuthResponse;
-import com.example.LongDistanceBus.auth.dto.LoginRequest;
-import com.example.LongDistanceBus.auth.dto.RegisterRequest;
-import com.example.LongDistanceBus.domain.User;
-import com.example.LongDistanceBus.repo.UserRepository;
+import com.example.LongDistanceBus.auth.dto.*;
+import com.example.LongDistanceBus.security.JwtService;
+import com.example.LongDistanceBus.user.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.example.LongDistanceBus.security.JwtService;
-import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
     private final UserRepository users;
-    private final PasswordEncoder encoder;
+    private final PasswordEncoder passwordEncoder;
     private final JwtService jwt;
 
-    public AuthService(UserRepository users, PasswordEncoder encoder, JwtService jwt) {
-        this.users = users;
-        this.encoder = encoder;
-        this.jwt = jwt;
-    }
-
-    public AuthResponse register(RegisterRequest req) {
-        users.findByEmail(req.getEmail()).ifPresent(u -> {
+    public void register(RegisterRequest req) {
+        if (users.findByEmail(req.getEmail()).isPresent()) {
             throw new RuntimeException("Email already exists");
-        });
-        if (req.getPhone() != null && !req.getPhone().isBlank()) {
-            users.findByPhone(req.getPhone()).ifPresent(u -> {
-                throw new RuntimeException("Phone already exists");
-            });
         }
-
-        User u = new User();
-        u.setFullName(req.getFullName());
-        u.setEmail(req.getEmail());
-        u.setPhone(req.getPhone());
-        u.setPasswordHash(encoder.encode(req.getPassword())); // mã hoá BCrypt
+        User u = User.builder()
+                .email(req.getEmail())
+                .fullName(req.getFullName())
+                .role(Role.USER)
+                .passwordHash(passwordEncoder.encode(req.getPassword()))
+                .build();
         users.save(u);
-
-        String token = jwt.generate(
-                u.getEmail(),
-                Map.of("uid", u.getId(), "role", u.getRole())
-        );
-        return new AuthResponse(token, u.getFullName());
-
     }
-    public AuthResponse login(LoginRequest req) {
-        var opt = req.getEmailOrPhone().contains("@")
-                ? users.findByEmail(req.getEmailOrPhone())
-                : users.findByPhone(req.getEmailOrPhone());
 
-        var u = opt.orElseThrow(() -> new RuntimeException("User not found"));
-        if (!encoder.matches(req.getPassword(), u.getPasswordHash())) {
-            throw new RuntimeException("Invalid credentials");
+    public TokenResponse login(LoginRequest req) {
+        User u = users.findByEmail(req.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (!passwordEncoder.matches(req.getPassword(), u.getPasswordHash())) {
+            throw new RuntimeException("Bad credentials");
         }
-        String token = jwt.generate(
-                u.getEmail(),
-                Map.of("uid", u.getId(), "role", u.getRole())
-        );
-        return new AuthResponse(token, u.getFullName());
+
+        // ✅ chỉ truyền userId
+        String token = jwt.generate(u.getId());
+        return new TokenResponse(token);
     }
 }

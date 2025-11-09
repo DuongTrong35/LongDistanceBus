@@ -1,0 +1,24 @@
+server:
+  port: 8085
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway   # <- expose endpoint gateway
+  endpoint:
+    gateway:
+      enabled: true                    # <- bật riêng endpoint gateway
+    health:
+      show-details: when_authorized    # tùy chọn
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: booking
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin

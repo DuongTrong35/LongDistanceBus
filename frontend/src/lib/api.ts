@@ -1,0 +1,48 @@
+// client/frontend/src/lib/api.ts
+import { http } from "./http";
+
+/** ===== Token helpers ===== */
+export function setToken(token: string) {
+  localStorage.setItem("accessToken", token);
+}
+export function getToken(): string | null {
+  return localStorage.getItem("accessToken");
+}
+export function clearToken() {
+  localStorage.removeItem("accessToken");
+}
+
+/** ===== Auth APIs ===== */
+export async function loginApi(payload: { email: string; password: string }) {
+  const res = await http.post("/api/auth/login", payload);
+  if (res?.data?.accessToken) setToken(res.data.accessToken);
+  return res.data; // { accessToken, expiresIn, ... }
+}
+
+/** ===== Booking/Search/Home APIs ===== */
+export async function getStations() {
+  // Nếu backend đã có endpoint:
+  const res = await http.get("/api/booking/stations");
+  return res.data;
+
+  // Nếu chưa có endpoint, tạm mock (chỉ bật khi cần):
+  // return [
+  //   { id: 1, name: "Sài Gòn" },
+  //   { id: 2, name: "Nha Trang" },
+  //   { id: 3, name: "Đà Lạt" },
+  // ];
+}
+
+export async function searchTrips(params: {
+  from: string;
+  to: string;
+  date: string;
+}) {
+  const res = await http.get("/api/booking/search", { params });
+  return res.data;
+}
+
+export async function getTripDetail(tripId: number) {
+  const res = await http.get(`/api/booking/trips/${tripId}/seats`);
+  return res.data;
+}

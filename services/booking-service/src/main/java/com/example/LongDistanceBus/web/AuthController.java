@@ -1,26 +1,36 @@
 package com.example.LongDistanceBus.web;
 
-import org.springframework.http.ResponseEntity;
+import com.example.LongDistanceBus.auth.AuthService;
+import com.example.LongDistanceBus.auth.dto.*;
+import com.example.LongDistanceBus.user.User;
+import com.example.LongDistanceBus.user.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    // DTO tối thiểu để parse JSON
-    public record LoginRequest(String email, String password) {}
-    public record TokenResponse(String accessToken, Long expiresIn) {}
+    private final AuthService authService;
+    private final UserRepository users;
 
-    @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest req) {
-        // BỎ QUA AuthService/JWT để thử đường đi
-        // Nếu request tới được đây, trả về 200 OK
-        return ResponseEntity.ok(new TokenResponse("mock-token-abc", 7200L));
+    @PostMapping("/register")
+    public void register(@RequestBody RegisterRequest req) {
+        authService.register(req);
     }
 
-    // (tùy) endpoint thử GET để ping nhanh
-    @GetMapping("/ping")
-    public ResponseEntity<String> ping() {
-        return ResponseEntity.ok("auth-ok");
+    @PostMapping("/login")
+    public TokenResponse login(@RequestBody LoginRequest req) {
+        return authService.login(req);
+    }
+
+    @GetMapping("/me")
+    public MeResponse me(Authentication auth) {
+        if (auth == null) return null;
+        Long userId = Long.parseLong(String.valueOf(auth.getPrincipal()));
+        User u = users.findById(userId).orElseThrow();
+        return new MeResponse(u.getId(), u.getEmail(), u.getFullName(), u.getRole().name());
     }
 }

@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -13,8 +12,14 @@
 
     <artifactId>booking-service</artifactId>
     <name>booking-service</name>
-    <description>Core booking backend</description>
     <packaging>jar</packaging>
+    <description>Core booking backend</description>
+
+    <!-- ===== Essentials ===== -->
+    <properties>
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <!-- Web / REST -->
@@ -34,7 +39,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- (Tuỳ) Validation, Lombok -->
+        <!-- Validation, Lombok -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
@@ -45,26 +50,17 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- (Tuỳ) OpenAPI -->
-        <dependency>
-          <groupId>org.springdoc</groupId>
-          <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-          <version>2.6.0</version>
-        </dependency>
-
-        <!-- Bảo mật Spring Security -->
+        <!-- Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
-        <!-- (Tuỳ) Tách riêng crypto nếu bạn dùng trực tiếp PasswordEncoder -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
-        <!-- JSON Web Token (JJWT) -->
+        <!-- JWT 0.11.x (khớp code setSubject/parseClaimsJws) -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -76,38 +72,58 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId> <!-- dùng Jackson để serialize/deserialize -->
+            <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Testing for Spring Boot 3 (JUnit 5) -->
+        <!-- (Tuỳ chọn) OpenAPI UI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
+        <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
+        <!-- TẮT FILTERING để tránh lỗi MalformedInputException -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+
         <plugins>
+            <!-- đảm bảo compile với Java 17 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
+                        <goals><goal>repackage</goal></goals>
                     </execution>
                 </executions>
-                <!-- KHÔNG cần <version>; lấy theo parent -->
             </plugin>
         </plugins>
     </build>
-
 </project>

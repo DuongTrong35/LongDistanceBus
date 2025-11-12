@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { login as loginApi } from "../lib/authApi";
 
 export default function Login() {
   const { login: loginCtx } = useAuth();
@@ -17,15 +16,11 @@ export default function Login() {
     setErr(null);
     setBusy(true);
     try {
-      const data = await loginApi({ email: emailOrPhone, password });
-      // lưu token tạm để UI biết đã đăng nhập (sẽ chuẩn hoá bằng AuthContext ở bước sau)
-      if (data?.accessToken) {
-        localStorage.setItem("accessToken", data.accessToken);
-      }
+      await loginCtx(emailOrPhone, password);
       const redirect = loc.state?.from?.pathname || "/";
       nav(redirect, { replace: true });
     } catch (ex: any) {
-      setErr(ex?.message || "Đăng nhập thất bại");
+      setErr(ex?.response?.data?.error || ex?.message || "Đăng nhập thất bại");
     } finally {
       setBusy(false);
     }

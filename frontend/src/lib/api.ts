@@ -12,11 +12,26 @@ export function clearToken() {
   localStorage.removeItem("accessToken");
 }
 
+// attach Authorization header automatically
+http.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) {
+    config.headers = config.headers ?? {};
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 /** ===== Auth APIs ===== */
 export async function loginApi(payload: { email: string; password: string }) {
   const res = await http.post("/api/auth/login", payload);
   if (res?.data?.accessToken) setToken(res.data.accessToken);
-  return res.data; // { accessToken, expiresIn, ... }
+  return res.data; // { accessToken, tokenType, ... }
+}
+
+export async function fetchProfile() {
+  const res = await http.get("/api/auth/me");
+  return res.data;
 }
 
 /** ===== Booking/Search/Home APIs ===== */

@@ -1,8 +1,29 @@
 HELP.md
+# Maven build output
 target/
+**/target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+# Node / frontend build output
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dist-ssr/
+
+# Runtime artifacts & logs
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Local env / secrets
+.env
+.env.*
+*.local
 
 ### STS ###
 .apt_generated
@@ -26,8 +47,21 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
+**/build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
+
+### OS-specific ###
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+
+### Compiled artifacts ###
+*.class
+*.jar
+*.war
+*.ear

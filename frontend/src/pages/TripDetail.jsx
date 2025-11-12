@@ -1,23 +1,22 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getTripDetail } from "../lib/api";
-import type { Seat, TripDetail } from "../types/trip";
 
-function fmtTime(iso?: string) {
+function fmtTime(iso) {
   if (!iso) return "";
   const d = new Date(iso);
   return d.toLocaleString();
 }
 
 export default function TripDetailPage() {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
   const tripId = Number(id);
   const nav = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [trip, setTrip] = useState<TripDetail | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState<number[]>([]);
+  const [trip, setTrip] = useState(null);
+  const [error, setError] = useState(null);
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     let on = true;
@@ -27,7 +26,7 @@ export default function TripDetailPage() {
         const data = await getTripDetail(tripId);
         if (!on) return;
         setTrip(data);
-      } catch (e: any) {
+      } catch (e) {
         setError(e?.message ?? "Không tải được dữ liệu");
       } finally {
         if (on) setLoading(false);
@@ -43,7 +42,7 @@ export default function TripDetailPage() {
     return `Chọn ghế – ${trip.fromName} → ${trip.toName}`;
   }, [trip]);
 
-  const toggleSeat = (s: Seat) => {
+  const toggleSeat = (s) => {
     if (s.booked) return; // ghế bị khóa
     setSelected(prev =>
       prev.includes(s.id) ? prev.filter(x => x !== s.id) : [...prev, s.id]
@@ -147,3 +146,4 @@ export default function TripDetailPage() {
     </div>
   );
 }
+

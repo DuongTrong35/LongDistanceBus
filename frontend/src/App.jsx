@@ -1,4 +1,4 @@
-// client/frontend/src/App.tsx
+// client/frontend/src/App.jsx
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -24,3 +24,4 @@ export default function App() {
 		</Routes>
 	);
 }
+

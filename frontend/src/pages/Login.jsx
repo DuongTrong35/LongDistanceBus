@@ -5,13 +5,13 @@ import { useAuth } from "../context/AuthContext";
 export default function Login() {
   const { login: loginCtx } = useAuth();
   const nav = useNavigate();
-  const loc = useLocation() as any;
+  const loc = useLocation();
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [err, setErr] = useState<string | null>(null);
+  const [err, setErr] = useState(null);
   const [busy, setBusy] = useState(false);
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e) {
     e.preventDefault();
     setErr(null);
     setBusy(true);
@@ -19,7 +19,7 @@ export default function Login() {
       await loginCtx(emailOrPhone, password);
       const redirect = loc.state?.from?.pathname || "/";
       nav(redirect, { replace: true });
-    } catch (ex: any) {
+    } catch (ex) {
       setErr(ex?.response?.data?.error || ex?.message || "Đăng nhập thất bại");
     } finally {
       setBusy(false);
@@ -41,3 +41,4 @@ export default function Login() {
     </div>
   );
 }
+

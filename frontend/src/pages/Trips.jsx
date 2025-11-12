@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { getStations, searchTrips } from "../lib/api";
-import type { Station, TripItem } from "../types/trip";
 
-function fmtTime(iso?: string) {
+function fmtTime(iso) {
   if (!iso) return "";
   const d = new Date(iso);
   return d.toLocaleString();
@@ -16,12 +15,12 @@ export default function Trips() {
   const date = sp.get("date") ?? ""; // YYYY-MM-DD
 
   const [loading, setLoading] = useState(true);
-  const [stations, setStations] = useState<Station[]>([]);
-  const [items, setItems] = useState<TripItem[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [stations, setStations] = useState([]);
+  const [items, setItems] = useState([]);
+  const [error, setError] = useState(null);
 
   // Tối giản: map tên -> id (so khớp không phân biệt hoa thường, trim)
-  const resolveStationId = (name: string) => {
+  const resolveStationId = (name) => {
     const norm = name.trim().toLowerCase();
     const found = stations.find(s => s.name.trim().toLowerCase() === norm);
     return found?.id;
@@ -56,10 +55,10 @@ export default function Trips() {
         }
 
         // 3) gọi API search
-        const trips: TripItem[] = await searchTrips({ fromId, toId, date });
+        const trips = await searchTrips({ fromId, toId, date });
         if (!mounted) return;
         setItems(trips);
-      } catch (e: any) {
+      } catch (e) {
         setError(e?.message ?? "Lỗi không xác định");
       } finally {
         if (mounted) setLoading(false);
@@ -123,3 +122,4 @@ export default function Trips() {
     </div>
   );
 }
+

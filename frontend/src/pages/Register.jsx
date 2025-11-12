@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -9,16 +9,16 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [err, setErr] = useState<string | null>(null);
+  const [err, setErr] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  async function onSubmit(e: FormEvent) {
+  async function onSubmit(e) {
     e.preventDefault();
     setErr(null); setLoading(true);
     try {
       await register({ fullName, email, phone, password });
       nav('/'); // auto login sau đăng ký
-    } catch (e: any) {
+    } catch (e) {
       setErr(e.message || 'Register failed');
     } finally {
       setLoading(false);
@@ -44,3 +44,4 @@ export default function Register() {
     </div>
   );
 }
+

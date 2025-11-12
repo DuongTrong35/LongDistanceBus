@@ -24,7 +24,7 @@ public class SecurityConfig {
     @Order(1)
     SecurityFilterChain publicEndpoints(HttpSecurity http) throws Exception {
         http
-                .securityMatcher("/auth/**", "/api/auth/**", "/ping", "/.well-known/**")
+                .securityMatcher("/auth/register", "/auth/login", "/ping", "/.well-known/**")
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());

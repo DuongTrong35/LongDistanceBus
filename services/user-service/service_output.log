@@ -1,0 +1,276 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.1)
+
+2025-11-12T00:43:41.251+07:00  INFO 30500 --- [UserService] [           main] c.l.user.UserServiceApplication          : Starting UserServiceApplication v0.0.1-SNAPSHOT using Java 17.0.12 with PID 30500 (C:\Users\phihu\OneDrive\Documents\J2EE\LongDistanceBus\services\user-service\target\user-service-0.0.1-SNAPSHOT.jar started by phihu in C:\Users\phihu\OneDrive\Documents\J2EE\LongDistanceBus\services\user-service)
+2025-11-12T00:43:41.255+07:00 DEBUG 30500 --- [UserService] [           main] c.l.user.UserServiceApplication          : Running with Spring Boot v3.4.1, Spring v6.2.1
+2025-11-12T00:43:41.256+07:00  INFO 30500 --- [UserService] [           main] c.l.user.UserServiceApplication          : No active profile set, falling back to 1 default profile: "default"
+2025-11-12T00:43:42.878+07:00  INFO 30500 --- [UserService] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-12T00:43:42.956+07:00  INFO 30500 --- [UserService] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 62 ms. Found 2 JPA repository interfaces.
+2025-11-12T00:43:44.281+07:00  INFO 30500 --- [UserService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8082 (http)
+2025-11-12T00:43:44.319+07:00  INFO 30500 --- [UserService] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-12T00:43:44.320+07:00  INFO 30500 --- [UserService] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-11-12T00:43:44.398+07:00  INFO 30500 --- [UserService] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-12T00:43:44.403+07:00  INFO 30500 --- [UserService] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3085 ms
+2025-11-12T00:43:45.460+07:00  INFO 30500 --- [UserService] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-12T00:43:45.772+07:00  INFO 30500 --- [UserService] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@35010a6b
+2025-11-12T00:43:45.774+07:00  INFO 30500 --- [UserService] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-12T00:43:45.847+07:00  INFO 30500 --- [UserService] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:3306/userdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC (MySQL 8.0)
+2025-11-12T00:43:45.910+07:00  INFO 30500 --- [UserService] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `userdb`.`flyway_schema_history` does not exist yet
+2025-11-12T00:43:45.914+07:00  INFO 30500 --- [UserService] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.028s)
+2025-11-12T00:43:45.943+07:00  INFO 30500 --- [UserService] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `userdb`.`flyway_schema_history` ...
+2025-11-12T00:43:46.039+07:00  INFO 30500 --- [UserService] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `userdb`: << Empty Schema >>
+2025-11-12T00:43:46.049+07:00  INFO 30500 --- [UserService] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `userdb` to version "1 - init user tables"
+2025-11-12T00:43:46.213+07:00  WARN 30500 --- [UserService] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: 'VALUES function' is deprecated and will be removed in a future release. Please use an alias (INSERT INTO ... VALUES (...) AS alias) and replace VALUES(col) in the ON DUPLICATE KEY UPDATE clause with alias.col instead (SQL State: HY000 - Error Code: 1287)
+2025-11-12T00:43:46.241+07:00  INFO 30500 --- [UserService] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `userdb` to version "2 - add password hash"
+2025-11-12T00:43:46.264+07:00  INFO 30500 --- [UserService] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `userdb` to version "3 - fix password column"
+2025-11-12T00:43:46.292+07:00  INFO 30500 --- [UserService] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 3 migrations to schema `userdb`, now at version v3 (execution time 00:00.172s)
+2025-11-12T00:43:46.415+07:00  INFO 30500 --- [UserService] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-12T00:43:46.474+07:00  INFO 30500 --- [UserService] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.4.Final
+2025-11-12T00:43:46.509+07:00  INFO 30500 --- [UserService] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-12T00:43:46.777+07:00  INFO 30500 --- [UserService] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-12T00:43:46.856+07:00  INFO 30500 --- [UserService] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.43
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-12T00:43:47.726+07:00  INFO 30500 --- [UserService] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-12T00:43:47.753+07:00  INFO 30500 --- [UserService] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-12T00:43:48.266+07:00 TRACE 30500 --- [UserService] [           main] eGlobalAuthenticationAutowiredConfigurer : Eagerly initializing {securityConfig=com.longdistancebus.user.config.SecurityConfig$$SpringCGLIB$$0@35920655}
+2025-11-12T00:43:48.269+07:00 DEBUG 30500 --- [UserService] [           main] swordEncoderAuthenticationManagerBuilder : No authenticationProviders and no parentAuthenticationManager defined. Returning null.
+2025-11-12T00:43:49.030+07:00  INFO 30500 --- [UserService] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-12T00:43:49.192+07:00 DEBUG 30500 --- [UserService] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-11-12T00:43:49.930+07:00  INFO 30500 --- [UserService] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8082 (http) with context path '/'
+2025-11-12T00:43:49.978+07:00  INFO 30500 --- [UserService] [           main] c.l.user.UserServiceApplication          : Started UserServiceApplication in 9.397 seconds (process running for 10.179)
+2025-11-12T00:44:18.091+07:00  INFO 30500 --- [UserService] [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-12T00:44:18.092+07:00  INFO 30500 --- [UserService] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-12T00:44:18.093+07:00  INFO 30500 --- [UserService] [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-11-12T00:44:18.112+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:18.113+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /auth/register
+2025-11-12T00:44:18.115+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:18.118+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:18.121+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:18.122+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:18.124+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:18.124+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:18.124+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:18.124+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:18.125+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:18.127+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:18.127+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:18.128+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:18.128+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:18.128+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:18.130+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] estMatcherDelegatingAuthorizationManager : Authorizing POST /auth/register
+2025-11-12T00:44:18.132+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] estMatcherDelegatingAuthorizationManager : Checking authorization on POST /auth/register using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:18.134+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /auth/register
+2025-11-12T00:44:18.555+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-1] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:44:20.927+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:20.927+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /auth/register
+2025-11-12T00:44:20.927+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:20.928+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:20.928+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:20.928+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:20.928+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:20.928+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:20.929+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:20.929+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:20.929+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:20.929+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:20.929+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:20.930+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:20.930+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:20.930+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:20.930+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] estMatcherDelegatingAuthorizationManager : Authorizing POST /auth/register
+2025-11-12T00:44:20.930+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] estMatcherDelegatingAuthorizationManager : Checking authorization on POST /auth/register using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:20.931+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /auth/register
+2025-11-12T00:44:21.004+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:44:22.905+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:22.905+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /auth/register
+2025-11-12T00:44:22.905+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:22.906+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:22.906+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:22.906+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:22.907+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:22.907+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:22.907+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:22.907+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:22.907+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:22.907+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:22.907+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:22.907+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:22.909+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:22.909+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:22.909+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] estMatcherDelegatingAuthorizationManager : Authorizing POST /auth/register
+2025-11-12T00:44:22.909+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] estMatcherDelegatingAuthorizationManager : Checking authorization on POST /auth/register using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:22.909+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /auth/register
+2025-11-12T00:44:22.979+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-5] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:44:32.395+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:32.396+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Securing POST /auth/register
+2025-11-12T00:44:32.396+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:32.396+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:32.396+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:32.398+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:32.398+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:32.398+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:32.398+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:32.398+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:32.398+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:32.398+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:32.398+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:32.399+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:32.399+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:32.399+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:32.400+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] estMatcherDelegatingAuthorizationManager : Authorizing POST /auth/register
+2025-11-12T00:44:32.400+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] estMatcherDelegatingAuthorizationManager : Checking authorization on POST /auth/register using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:32.400+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-7] o.s.security.web.FilterChainProxy        : Secured POST /auth/register
+2025-11-12T00:44:32.430+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-7] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:44:34.516+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:34.517+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /auth/register
+2025-11-12T00:44:34.517+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:34.517+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:34.517+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:34.517+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:34.518+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:34.518+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:34.518+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:34.518+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:34.518+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:34.518+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:34.519+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:34.519+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:34.519+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:34.519+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:34.520+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] estMatcherDelegatingAuthorizationManager : Authorizing POST /auth/register
+2025-11-12T00:44:34.520+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] estMatcherDelegatingAuthorizationManager : Checking authorization on POST /auth/register using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:34.520+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /auth/register
+2025-11-12T00:44:34.524+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-8] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:44:36.568+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:36.568+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /auth/login
+2025-11-12T00:44:36.568+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:36.569+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:36.569+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:36.570+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:36.570+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:36.570+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:36.570+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:36.570+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:36.571+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:36.571+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:36.571+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:36.571+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:36.571+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:36.571+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:36.571+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] estMatcherDelegatingAuthorizationManager : Authorizing POST /auth/login
+2025-11-12T00:44:36.571+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] estMatcherDelegatingAuthorizationManager : Checking authorization on POST /auth/login using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:36.572+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /auth/login
+2025-11-12T00:44:36.671+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-9] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:44:38.638+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:38.639+07:00 DEBUG 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /.well-known/jwks.json
+2025-11-12T00:44:38.639+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:38.639+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:38.639+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:38.640+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:38.640+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:38.640+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:38.640+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:38.641+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:38.641+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:38.641+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:38.641+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:38.641+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:38.642+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:38.642+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:38.642+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] estMatcherDelegatingAuthorizationManager : Authorizing GET /.well-known/jwks.json
+2025-11-12T00:44:38.642+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] estMatcherDelegatingAuthorizationManager : Checking authorization on GET /.well-known/jwks.json using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:38.644+07:00 DEBUG 30500 --- [UserService] [io-8082-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /.well-known/jwks.json
+2025-11-12T00:44:38.651+07:00 TRACE 30500 --- [UserService] [io-8082-exec-10] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:44:40.654+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:40.654+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /ping
+2025-11-12T00:44:40.655+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:40.655+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:40.655+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:40.655+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:40.655+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:40.656+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:40.656+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:40.656+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:40.656+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:40.656+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:40.657+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:40.657+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:40.657+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:40.657+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:40.658+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] estMatcherDelegatingAuthorizationManager : Authorizing GET /ping
+2025-11-12T00:44:40.658+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] estMatcherDelegatingAuthorizationManager : Checking authorization on GET /ping using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:40.658+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /ping
+2025-11-12T00:44:40.660+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-2] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:44:48.141+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:48.143+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /auth/register
+2025-11-12T00:44:48.143+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:48.143+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:48.143+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:48.144+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:48.144+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:48.144+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:48.144+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:48.144+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:48.144+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:48.145+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:48.145+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:48.145+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:48.145+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:48.146+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:48.146+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] estMatcherDelegatingAuthorizationManager : Authorizing POST /auth/register
+2025-11-12T00:44:48.146+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] estMatcherDelegatingAuthorizationManager : Checking authorization on POST /auth/register using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:48.146+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /auth/register
+2025-11-12T00:44:48.151+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-3] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:44:50.062+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:44:50.063+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /auth/register
+2025-11-12T00:44:50.063+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:44:50.063+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:44:50.063+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:44:50.063+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:44:50.064+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:44:50.064+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:44:50.064+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:44:50.064+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:44:50.064+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:44:50.065+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:44:50.065+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:44:50.065+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:44:50.065+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:44:50.065+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:44:50.065+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] estMatcherDelegatingAuthorizationManager : Authorizing POST /auth/register
+2025-11-12T00:44:50.066+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] estMatcherDelegatingAuthorizationManager : Checking authorization on POST /auth/register using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:44:50.066+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /auth/register
+2025-11-12T00:44:50.136+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-4] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2025-11-12T00:45:17.282+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/longdistancebus/user/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2025-11-12T00:45:17.282+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /auth/register?Content-Type=application/json
+2025-11-12T00:45:17.282+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2025-11-12T00:45:17.283+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2025-11-12T00:45:17.283+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2025-11-12T00:45:17.283+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2025-11-12T00:45:17.284+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (5/11)
+2025-11-12T00:45:17.284+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2025-11-12T00:45:17.284+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (6/11)
+2025-11-12T00:45:17.284+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (7/11)
+2025-11-12T00:45:17.284+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (8/11)
+2025-11-12T00:45:17.284+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (9/11)
+2025-11-12T00:45:17.284+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2025-11-12T00:45:17.286+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2025-11-12T00:45:17.286+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2025-11-12T00:45:17.286+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2025-11-12T00:45:17.286+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] estMatcherDelegatingAuthorizationManager : Authorizing POST /auth/register?Content-Type=application/json
+2025-11-12T00:45:17.287+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] estMatcherDelegatingAuthorizationManager : Checking authorization on POST /auth/register?Content-Type=application/json using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1691/0x0000024d81a054c8@2f92fbca
+2025-11-12T00:45:17.287+07:00 DEBUG 30500 --- [UserService] [nio-8082-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /auth/register?Content-Type=application/json
+2025-11-12T00:45:17.358+07:00 TRACE 30500 --- [UserService] [nio-8082-exec-6] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]

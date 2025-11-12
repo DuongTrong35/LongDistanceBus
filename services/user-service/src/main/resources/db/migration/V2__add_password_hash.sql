@@ -1,0 +1,2 @@
+-- V2: Migration removed - password_hash is now in V1
+-- This file is kept for migration history but does nothing

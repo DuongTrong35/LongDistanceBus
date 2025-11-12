@@ -1,0 +1,7 @@
+-- V3: Fix password column issue
+-- This is a simple migration that should be run manually if database has old schema
+-- For development: Drop and recreate database, or run this SQL manually:
+-- 
+-- ALTER TABLE users DROP COLUMN password;
+-- 
+-- The password_hash column should already exist from V1 or V2 migration

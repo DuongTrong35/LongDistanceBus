@@ -3,6 +3,7 @@ package com.example.LongDistanceBus.web;
 import com.example.LongDistanceBus.domain.Trip;
 import com.example.LongDistanceBus.repo.SeatRepository;
 import com.example.LongDistanceBus.repo.TripRepository;
+import com.example.LongDistanceBus.web.dto.SeatDTO;
 import com.example.LongDistanceBus.web.dto.TripDetailDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -55,10 +56,10 @@ public class TripController {
         List<Long> bookedSeatIds = List.of();
 
         var seatDTOs = seatList.stream()
-                .map(s -> new TripDetailDTO.SeatDTO(
+                .map(s -> new SeatDTO(
                         s.getId(),
                         s.getCode(),
-                        s.getType(),
+                        String.valueOf(s.getType()), // nếu type là enum; nếu đã là String thì dùng s.getType()
                         bookedSeatIds.contains(s.getId())
                 ))
                 .toList();

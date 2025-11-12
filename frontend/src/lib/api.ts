@@ -1,5 +1,6 @@
 // client/frontend/src/lib/api.ts
 import { http } from "./http";
+import type { TripDetail, TripItem } from "../types/trip";
 
 /** ===== Token helpers ===== */
 export function setToken(token: string) {
@@ -21,28 +22,32 @@ export async function loginApi(payload: { email: string; password: string }) {
 
 /** ===== Booking/Search/Home APIs ===== */
 export async function getStations() {
-  // Nếu backend đã có endpoint:
-  const res = await http.get("/api/booking/stations");
+  const res = await http.get("/api/stations");
   return res.data;
-
-  // Nếu chưa có endpoint, tạm mock (chỉ bật khi cần):
-  // return [
-  //   { id: 1, name: "Sài Gòn" },
-  //   { id: 2, name: "Nha Trang" },
-  //   { id: 3, name: "Đà Lạt" },
-  // ];
 }
 
 export async function searchTrips(params: {
-  from: string;
-  to: string;
+  fromId: number;
+  toId: number;
   date: string;
 }) {
-  const res = await http.get("/api/booking/search", { params });
-  return res.data;
+  const res = await http.get("/api/trips/search", { params });
+  const items = res.data as any[];
+  return items.map((trip: any): TripItem => ({
+    id: trip.id,
+    route: trip.route,
+    bus: trip.bus,
+    departureTime: trip.departureTime,
+    arrivalTime: trip.arrivalTime,
+    price: trip.price,
+    seatsTotal: trip.seatsTotal,
+    seatsBooked: trip.seatsBooked,
+    operatorName: trip.bus?.operator?.name ?? trip.operatorName,
+    busName: trip.bus?.name ?? trip.busName ?? trip.bus?.model,
+  }));
 }
 
 export async function getTripDetail(tripId: number) {
-  const res = await http.get(`/api/booking/trips/${tripId}/seats`);
-  return res.data;
+  const res = await http.get(`/api/trips/${tripId}`);
+  return res.data as TripDetail;
 }

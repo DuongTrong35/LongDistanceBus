@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { loginApi, setToken as saveToken, clearToken, getToken } from "../lib/api";
+import { loginApi, clearToken, getToken, fetchProfile } from "../lib/api";
 
-type AuthState = { fullName: string | null };
 type AuthCtx = {
   fullName: string | null;
   isAuthed: boolean;
@@ -14,17 +13,33 @@ const Ctx = createContext<AuthCtx | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [fullName, setFullName] = useState<string | null>(null);
 
-  // Khôi phục phiên khi F5 (tên lưu ở localStorage)
   useEffect(() => {
-    const stored = localStorage.getItem("fullName");
-    if (stored && getToken()) setFullName(stored);
+    async function hydrate() {
+      if (!getToken()) return;
+      try {
+        const profile = await fetchProfile();
+        const name = profile.fullName ?? profile.email ?? null;
+        setFullName(name);
+        if (name) localStorage.setItem("fullName", name);
+      } catch (err) {
+        clearToken();
+        localStorage.removeItem("fullName");
+      }
+    }
+    hydrate();
   }, []);
 
-  async function login(emailOrPhone: string, password: string) {
-    const res = await loginApi({ emailOrPhone, password });
-    saveToken(res.accessToken);                 // lưu JWT
-    localStorage.setItem("fullName", res.fullName);
-    setFullName(res.fullName);
+  async function login(email: string, password: string) {
+    await loginApi({ email, password });
+    try {
+      const profile = await fetchProfile();
+      const name = profile.fullName ?? profile.email ?? null;
+      if (name) localStorage.setItem("fullName", name);
+      setFullName(name);
+    } catch (err) {
+      setFullName(null);
+      throw err;
+    }
   }
 
   function logout() {

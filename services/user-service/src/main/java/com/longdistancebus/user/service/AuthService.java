@@ -29,11 +29,12 @@ public class AuthService {
     }
 
     public User register(RegisterRequest req) {
-        if (users.existsByEmail(req.getEmail())) {
+        String email = req.getEmail().trim().toLowerCase();
+        if (users.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already registered");
         }
         User u = new User();
-        u.setEmail(req.getEmail());
+        u.setEmail(email);
         u.setFullName(req.getFullName());
         u.setPasswordHash(passwordEncoder.encode(req.getPassword()));
         Role userRole = roles.findByName("USER").orElseGet(() -> roles.save(new Role("USER")));
@@ -42,7 +43,8 @@ public class AuthService {
     }
 
     public String login(LoginRequest req) {
-        User u = users.findByEmail(req.getEmail())
+        String email = req.getEmail().trim().toLowerCase();
+        User u = users.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
         if (!passwordEncoder.matches(req.getPassword(), u.getPasswordHash())) {
             throw new IllegalArgumentException("Invalid credentials");

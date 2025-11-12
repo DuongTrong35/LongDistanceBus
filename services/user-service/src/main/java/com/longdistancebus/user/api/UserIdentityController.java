@@ -5,6 +5,7 @@ import com.longdistancebus.user.domain.Role;
 import com.longdistancebus.user.domain.User;
 import com.longdistancebus.user.repo.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping({"/auth", "/api/auth"})
 public class UserIdentityController {
 
     private final UserRepository users;
@@ -24,8 +25,11 @@ public class UserIdentityController {
     }
 
     @GetMapping("/me")
-    public RegisterResponse me(JwtAuthenticationToken principal) {
-        String email = principal.getToken().getSubject();
+    public RegisterResponse me(Authentication authentication) {
+        if (!(authentication instanceof JwtAuthenticationToken token)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+        String email = token.getToken().getSubject();
         User user = users.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 

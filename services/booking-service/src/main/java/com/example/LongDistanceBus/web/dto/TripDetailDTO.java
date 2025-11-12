@@ -9,11 +9,25 @@ public record TripDetailDTO(
         String toName,
         LocalDateTime departureTime,
         LocalDateTime arrivalTime,
+        String operatorName,
         String busName,
-        String plate,
+        String busPlate,
         List<TripDetailDTO.SeatDTO> seats
 ) {
     public static record SeatDTO(
-            Long id, String code, String type, boolean booked
+            Long id,
+            String code,
+            SeatTypeDTO seatType,
+            boolean booked,
+            Integer price,
+            Integer deck,
+            Integer row,
+            Integer column
+    ) {}
+
+    public static record SeatTypeDTO(
+            Long id,
+            String code,
+            String name
     ) {}
 }

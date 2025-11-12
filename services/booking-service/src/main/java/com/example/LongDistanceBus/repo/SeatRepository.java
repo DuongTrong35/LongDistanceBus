@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SeatRepository extends JpaRepository<Seat, Long> {
     List<Seat> findByBus_Id(Long busId);
+
+    List<Seat> findByBus_IdOrderByDeckNumberAscRowIndexAscColumnIndexAsc(Long busId);
 }

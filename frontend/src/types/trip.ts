@@ -1,30 +1,50 @@
-export type Station = { id: number; name: string };
+export type Station = { id: number; name: string; city?: string };
+
 export type TripItem = {
   id: number;
   route?: {
-    fromStation?: { name: string };
-    toStation?: { name: string };
+    fromStation?: { id?: number; name?: string };
+    toStation?: { id?: number; name?: string };
   };
-  departureTime: string;     // ISO
-  arrivalTime?: string;      // ISO
-  operatorName?: string;     // nhà xe
+  bus?: {
+    id: number;
+    name: string;
+    plate: string;
+    operator?: { id: number; name: string };
+  };
+  departureTime: string;
+  arrivalTime?: string;
+  price?: number;
+  seatsTotal?: number;
+  seatsBooked?: number;
+  operatorName?: string;
   busName?: string;
-  price?: number;            // có thể chưa có, tạm để optional
+};
+
+export type SeatTypeInfo = {
+  id: number;
+  code: string;
+  name: string;
 };
 
 export type Seat = {
   id: number;
   code: string;
-  type?: string;   // ví dụ: NORMAL/VIP/TẦNG_1/TẦNG_2...
-  booked: boolean; // true = đã bán/không chọn được
+  seatType: SeatTypeInfo;
+  price?: number;
+  booked: boolean;
+  deck?: number | null;
+  row?: number | null;
+  column?: number | null;
 };
 
 export type TripDetail = {
   id: number;
   fromName: string;
   toName: string;
-  departureTime: string; // ISO
-  arrivalTime?: string;  // ISO
+  departureTime: string;
+  arrivalTime?: string;
+  operatorName?: string;
   busName?: string;
   busPlate?: string;
   seats: Seat[];

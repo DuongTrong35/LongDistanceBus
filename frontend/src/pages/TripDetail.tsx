@@ -37,6 +37,13 @@ export default function TripDetailPage() {
   }, [tripId]);
 
   const seatCount = selected.length;
+  const totalAmount = useMemo(() => {
+    if (!trip) return 0;
+    return selected.reduce((sum, seatId) => {
+      const seat = trip.seats.find(s => s.id === seatId);
+      return sum + (seat?.price ?? 0);
+    }, 0);
+  }, [trip, selected]);
 
   const title = useMemo(() => {
     if (!trip) return "Chi tiết chuyến";
@@ -86,9 +93,11 @@ export default function TripDetailPage() {
                 {trip.arrivalTime && <div>Đến nơi: <strong>{fmtTime(trip.arrivalTime)}</strong></div>}
               </div>
               <div>
-                <div>Nhà xe: <strong>{trip.busName ?? "—"}</strong></div>
+                <div>Nhà xe: <strong>{trip.operatorName ?? "—"}</strong></div>
+                <div>Loại xe: <strong>{trip.busName ?? "—"}</strong></div>
                 <div>Biển số: <strong>{trip.busPlate ?? "—"}</strong></div>
                 <div>Ghế đã chọn: <strong>{seatCount}</strong></div>
+                <div>Tạm tính: <strong>{totalAmount.toLocaleString("vi-VN")} đ</strong></div>
               </div>
             </div>
           </div>
@@ -107,7 +116,7 @@ export default function TripDetailPage() {
                     key={s.id}
                     onClick={() => toggleSeat(s)}
                     disabled={s.booked}
-                    title={s.type ? `${s.code} (${s.type})` : s.code}
+                    title={[s.seatType?.name, s.price ? `${s.price.toLocaleString("vi-VN")} đ` : null].filter(Boolean).join(" • ")}
                     style={{
                       height:64, border:`1px solid ${border}`, borderRadius:10,
                       background:bg, color, cursor: s.booked ? "not-allowed" : "pointer",
@@ -117,8 +126,13 @@ export default function TripDetailPage() {
                   >
                     <div style={{fontWeight:700}}>{s.code}</div>
                     <div style={{fontSize:12, opacity:.7}}>
-                      {s.booked ? "ĐÃ BÁN" : (s.type ?? "Ghế")}
+                      {s.booked ? "ĐÃ BÁN" : s.seatType?.name ?? "Ghế"}
                     </div>
+                    {s.price != null && (
+                      <div style={{fontSize:12, color:"#16a34a", fontWeight:600}}>
+                        {s.price.toLocaleString("vi-VN")} đ
+                      </div>
+                    )}
                   </button>
                 );
               })}
@@ -127,7 +141,8 @@ export default function TripDetailPage() {
 
           <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:16}}>
             <div style={{fontSize:14, color:"#6b7280"}}>
-              Chọn một hoặc nhiều ghế rồi bấm <strong>Tiếp tục</strong>.
+              Chọn ghế rồi bấm <strong>Tiếp tục</strong>. Tổng tiền dự kiến:{" "}
+              <strong>{totalAmount.toLocaleString("vi-VN")} đ</strong>
             </div>
             <button
               onClick={goCheckout}

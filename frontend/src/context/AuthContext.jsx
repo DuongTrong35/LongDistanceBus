@@ -1,17 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { loginApi, clearToken, getToken, fetchProfile } from "../lib/api";
+import { loginApi, registerApi, clearToken, getToken, fetchProfile } from "../lib/api";
 
-type AuthCtx = {
-  fullName: string | null;
-  isAuthed: boolean;
-  login: (emailOrPhone: string, password: string) => Promise<void>;
-  logout: () => void;
-};
+const Ctx = createContext(null);
 
-const Ctx = createContext<AuthCtx | null>(null);
-
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [fullName, setFullName] = useState<string | null>(null);
+export function AuthProvider({ children }) {
+  const [fullName, setFullName] = useState(null);
 
   useEffect(() => {
     async function hydrate() {
@@ -29,7 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     hydrate();
   }, []);
 
-  async function login(email: string, password: string) {
+  async function login(email, password) {
     await loginApi({ email, password });
     try {
       const profile = await fetchProfile();
@@ -42,6 +35,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  async function register(payload) {
+    await registerApi(payload);
+    // After registration, optionally auto-login
+    try {
+      const profile = await fetchProfile();
+      const name = profile.fullName ?? profile.email ?? null;
+      if (name) localStorage.setItem("fullName", name);
+      setFullName(name);
+    } catch (err) {
+      // Registration succeeded but profile fetch failed - that's okay
+    }
+  }
+
   function logout() {
     clearToken();
     localStorage.removeItem("fullName");
@@ -49,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <Ctx.Provider value={{ fullName, isAuthed: !!fullName, login, logout }}>
+    <Ctx.Provider value={{ fullName, isAuthed: !!fullName, login, register, logout }}>
       {children}
     </Ctx.Provider>
   );
@@ -60,3 +66,4 @@ export function useAuth() {
   if (!ctx) throw new Error("AuthContext missing");
   return ctx;
 }
+

@@ -10,7 +10,7 @@ export default function Home() {
   const [to, setTo] = useState("");
   const [date, setDate] = useState("");
 
-  const onSearch = (e: React.FormEvent) => {
+  const onSearch = (e) => {
     e.preventDefault();
     // Tạm thời chỉ điều hướng và show alert – khi có API sẽ gọi thật
     if (!from || !to || !date) return alert("Nhập đầy đủ điểm đi, điểm đến và ngày.");
@@ -77,3 +77,4 @@ export default function Home() {
     </div>
   );
 }
+

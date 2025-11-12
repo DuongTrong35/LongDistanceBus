@@ -7,6 +7,7 @@ import Trips from "./pages/Trips";
 import TripDetail from "./pages/TripDetail";
 import RequireAuth from "./context/RequireAuth";
 import { useAuth } from "./context/AuthContext";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function Layout() {
   const { fullName, isAuthed, logout } = useAuth();
@@ -24,6 +25,7 @@ function Layout() {
         ) : (
           <>
             <span>Xin chào, {fullName}</span>
+            <Link to="/admin">Quản trị</Link>
             <button onClick={logout}>Đăng xuất</button>
           </>
         )}
@@ -42,8 +44,14 @@ export default function App() {
         <Route path="/trips/:id" element={<TripDetail />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/trips" element={<RequireAuth><Trips/></RequireAuth>} />
-        <Route path="/trips/:id" element={<RequireAuth><TripDetail/></RequireAuth>} />
+        <Route
+          path="/admin"
+          element={
+            <RequireAuth>
+              <AdminDashboard />
+            </RequireAuth>
+          }
+        />
       </Route>
     </Routes>
   );

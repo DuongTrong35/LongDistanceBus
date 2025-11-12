@@ -1075,14 +1075,14 @@ function ReviewManager() {
     try {
       await createReview(form);
       setMessage("Đã thêm đánh giá.");
-      const opId = form.operatorId ?? undefined;
+      const opId = filterOperatorId === "" ? undefined : Number(filterOperatorId);
       await refresh(opId);
       reset({
         rating: 5,
         title: "",
         content: "",
         customerName: "",
-        operatorId: opId,
+        operatorId: form.operatorId,
         busId: undefined,
         tripId: undefined,
         source: "Admin",

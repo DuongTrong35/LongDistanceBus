@@ -1,0 +1,29 @@
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+h5 {
+    color: #495057;
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #495057;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+}
+/* .custominput{
+      width: 500px !important; 
+
+} */
+ .form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; /* tương đương gap-3 của bootstrap */
+}

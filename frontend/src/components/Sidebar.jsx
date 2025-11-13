@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 const navItems = [
 	{ to: "/", label: "Trang chủ", icon: "🏠" },
 	{ to: "/trips", label: "Tìm chuyến", icon: "🚌" },
+	{to: "/employee", label:"Nhân viên",icon:"👨‍💻"}
 ];
 
 export default function Sidebar() {

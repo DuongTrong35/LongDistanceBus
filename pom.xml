@@ -37,6 +37,7 @@
         <module>gateway</module>
         <module>services/booking-service</module>
         <module>services/user-service</module>
+        <module>services/staff-service</module>
     </modules>
 
     <build>

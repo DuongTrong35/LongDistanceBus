@@ -16,6 +16,10 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: staff-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/employees/**
         - id: user-service
           uri: http://localhost:8082
           predicates:

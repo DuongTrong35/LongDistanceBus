@@ -1,10 +1,81 @@
-HELP.md
+# Maven
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+*.jar
+*.jar.original
+*.class
+*.war
+*.ear
+*.nar
 
-### STS ###
+# Build outputs
+build/
+dist/
+dist-ssr/
+*.local
+
+# Logs
+*.log
+*.log.*
+logs/
+service_error.log
+service_output.log
+*-error.log
+*-output.log
+
+# Test reports
+surefire-reports/
+test-results/
+*.dumpstream
+*.txt
+TEST-*.xml
+
+# Package files (root level only, keep frontend/package-lock.json)
+/package-lock.json
+/yarn.lock
+/pnpm-lock.yaml
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Database scripts (backup files only)
+*.sql.bak
+*.sql.backup
+
+# Application properties (sensitive data - database credentials, JWT keys)
+**/application.properties
+**/application-*.properties
+**/application-*.local.properties
+**/application-*.local.yml
+
+# Application YAML (ignore if contains sensitive data, uncomment if needed)
+# **/application.yml
+# **/application-*.yml
+
+# Keep example/template files (if you create them)
+!**/application.example.properties
+!**/application.example.yml
+!**/application.template.properties
+!**/application.template.yml
+
+# STS
 .apt_generated
 .classpath
 .factorypath
@@ -13,21 +84,97 @@ target/
 .springBeans
 .sts4-cache
 
-### IntelliJ IDEA ###
-.idea
+# IntelliJ IDEA
+.idea/
 *.iws
 *.iml
 *.ipr
+out/
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
-/dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# VS Code
 .vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Eclipse
+.metadata
+.classpath
+.project
+.settings/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
+
+# Generated sources
+generated-sources/
+generated-test-sources/
+generated/
+
+# Coverage reports
+.nyc_output
+coverage/
+*.lcov
+.istanbul/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Help files
+HELP.md

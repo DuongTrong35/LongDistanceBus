@@ -38,6 +38,7 @@
         <module>services/booking-service</module>
         <module>services/user-service</module>
         <module>services/staff-service</module>
+        <module>services/seat-service</module>
     </modules>
 
     <build>

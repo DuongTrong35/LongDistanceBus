@@ -280,6 +280,36 @@ CREATE TABLE `operators` (
   UNIQUE KEY `uk_operators_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_reviews`
+--
+
+CREATE TABLE `customer_reviews` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT 'Map sang userdb.users.id',
+  `operator_id` bigint(20) NOT NULL COMMENT 'Nhà xe được đánh giá',
+  `trip_id` bigint(20) DEFAULT NULL COMMENT 'Chuyến đi cụ thể (nếu có)',
+  `booking_id` bigint(20) DEFAULT NULL COMMENT 'Mã đặt chỗ (nếu có)',
+  `rating` tinyint(4) NOT NULL,
+  `title` varchar(150) DEFAULT NULL,
+  `content` text NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'PUBLISHED',
+  `reviewed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_reviews_user_booking` (`user_id`,`booking_id`),
+  UNIQUE KEY `uk_reviews_user_trip` (`user_id`,`trip_id`),
+  KEY `idx_reviews_operator_status` (`operator_id`,`status`),
+  KEY `idx_reviews_user` (`user_id`),
+  KEY `idx_reviews_trip` (`trip_id`),
+  KEY `idx_reviews_booking` (`booking_id`),
+  CONSTRAINT `fk_reviews_operator` FOREIGN KEY (`operator_id`) REFERENCES `operators` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `chk_reviews_rating` CHECK (`rating` between 1 and 5),
+  CONSTRAINT `chk_reviews_status` CHECK (`status` in ('PUBLISHED','HIDDEN','FLAGGED','DELETED'))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -518,6 +548,18 @@ INSERT INTO `operators` (`name`, `hotline`, `address`, `description`, `status`) 
 ('Xe Khách Thanh Thủy', '1900 6074', '258 Đường Hùng Vương, Quận 5, TP. Hồ Chí Minh', 'Nhà xe chuyên tuyến miền Tây. Xe đời mới, tiện nghi đầy đủ. Giá vé hợp lý, phục vụ chu đáo. Được khách hàng đánh giá cao về chất lượng.', 'ACTIVE'),
 ('Xe Khách Hải Âu', '1900 6075', '369 Đường Nguyễn Trãi, Quận 1, TP. Hồ Chí Minh', 'Nhà xe chuyên tuyến biển và miền Trung. Xe giường nằm cao cấp, có điều hòa, wifi miễn phí. Đội ngũ nhân viên nhiệt tình, chuyên nghiệp.', 'ACTIVE'),
 ('Xe Khách Sài Gòn', '1900 6076', '741 Đường Điện Biên Phủ, Quận Bình Thạnh, TP. Hồ Chí Minh', 'Nhà xe địa phương với nhiều năm phục vụ khách hàng. Chuyên các tuyến nội thành và ngoại thành. Xe sạch sẽ, giá cả phải chăng, phục vụ tận tâm.', 'ACTIVE');
+
+--
+-- Sample data for table `customer_reviews`
+--
+INSERT INTO `customer_reviews`
+    (`user_id`,`operator_id`,`trip_id`,`booking_id`,`rating`,`title`,`content`,`status`,`reviewed_at`,`updated_at`)
+VALUES
+    (101, 1, NULL, NULL, 5, 'Xe chạy êm, tài xế thân thiện', 'Tôi rất hài lòng với chuyến đi. Xe sạch sẽ và tài xế hỗ trợ khách tận tình.', 'PUBLISHED', NOW(), NOW()),
+    (102, 1, NULL, NULL, 4, 'Đúng giờ nhưng ghế hơi cứng', 'Xe khởi hành đúng giờ, tuy nhiên ghế hơi cứng một chút.', 'PUBLISHED', NOW() - INTERVAL 2 DAY, NOW() - INTERVAL 2 DAY),
+    (103, 2, NULL, NULL, 3, 'Trễ giờ đón', 'Xe bị trễ gần 20 phút nên tôi hơi khó chịu. Mong nhà xe cải thiện.', 'FLAGGED', NOW() - INTERVAL 5 DAY, NOW() - INTERVAL 1 DAY),
+    (104, 3, NULL, NULL, 5, 'Dịch vụ tuyệt vời', 'Nhân viên hỗ trợ hết mình, wifi ổn định, nước uống miễn phí.', 'PUBLISHED', NOW() - INTERVAL 7 DAY, NOW() - INTERVAL 6 DAY),
+    (105, 4, NULL, NULL, 2, 'Không hài lòng với vệ sinh', 'Sàn xe hơi bẩn, mong lần sau được cải thiện.', 'HIDDEN', NOW() - INTERVAL 10 DAY, NOW() - INTERVAL 3 DAY);
 
 COMMIT;
 

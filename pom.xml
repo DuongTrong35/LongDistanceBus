@@ -40,6 +40,7 @@
         <module>services/staff-service</module>
         <module>services/seat-service</module>
         <module>services/operator-service</module>
+        <module>services/review-service</module>
     </modules>
 
     <build>

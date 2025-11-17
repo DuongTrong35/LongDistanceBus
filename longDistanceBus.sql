@@ -1,209 +1,526 @@
--- ============================================
--- Long Distance Bus Database Schema
--- MySQL Database Setup Script
--- Dựa trên database hiện có trong MySQL
--- ============================================
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:3366
+-- Generation Time: Oct 07, 2025 at 05:12 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
--- Tạo database nếu chưa có
-CREATE DATABASE IF NOT EXISTS longdistancebus 
-    CHARACTER SET utf8mb4 
-    COLLATE utf8mb4_unicode_ci;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-USE longdistancebus;
 
--- ============================================
--- DATABASE 1: USERDB (User Service)
--- ============================================
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
--- Tạo userdb nếu chưa có
-CREATE DATABASE IF NOT EXISTS userdb 
-    CHARACTER SET utf8mb4 
-    COLLATE utf8mb4_unicode_ci;
+--
+-- Database: `longdistancebus`
+--
 
-USE userdb;
+-- --------------------------------------------------------
 
--- Users table
-CREATE TABLE IF NOT EXISTS users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    full_name VARCHAR(255),
-    status VARCHAR(20) DEFAULT 'ACTIVE',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT uk_users_email UNIQUE (email)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Table structure for table `account`
+--
 
--- Roles table
-CREATE TABLE IF NOT EXISTS roles (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    CONSTRAINT uk_roles_name UNIQUE (name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `account` (
+  `id` varchar(10) NOT NULL,
+  `taikhoan` varchar(25) NOT NULL,
+  `matkhau` varchar(25) NOT NULL,
+  `maquyen` varchar(10) NOT NULL,
+  `ngaytao` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- User roles junction table
-CREATE TABLE IF NOT EXISTS user_roles (
-    user_id BIGINT NOT NULL,
-    role_id BIGINT NOT NULL,
-    PRIMARY KEY (user_id, role_id),
-    CONSTRAINT fk_ur_user FOREIGN KEY (user_id) 
-        REFERENCES users(id) ON DELETE CASCADE,
-    CONSTRAINT fk_ur_role FOREIGN KEY (role_id) 
-        REFERENCES roles(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- --------------------------------------------------------
 
--- Insert default roles
-INSERT INTO roles(name) VALUES ('USER'), ('ADMIN')
-ON DUPLICATE KEY UPDATE name = VALUES(name);
+--
+-- Table structure for table `bus`
+--
 
--- ============================================
--- DATABASE 2: LONGDISTANCEBUS (Booking & Staff Services)
--- ============================================
+CREATE TABLE `bus` (
+  `id` varchar(10) NOT NULL,
+  `ten` varchar(50) NOT NULL,
+  `bienso` varchar(25) NOT NULL,
+  `loaixe` varchar(25) NOT NULL,
+  `tongsoghe` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-USE longdistancebus;
+-- --------------------------------------------------------
 
--- Operators table (Nhà xe) - Đã cập nhật thêm các trường cần thiết
-CREATE TABLE IF NOT EXISTS operators (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(120) NOT NULL,
-    hotline VARCHAR(30),
-    address VARCHAR(255),
-    description TEXT,
-    status VARCHAR(20) DEFAULT 'ACTIVE' COMMENT 'ACTIVE, INACTIVE',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT uk_operators_name UNIQUE (name),
-    INDEX idx_operators_status (status)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Table structure for table `employee`
+--
 
--- Stations table (Bến xe)
-CREATE TABLE IF NOT EXISTS stations (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(120) NOT NULL,
-    city VARCHAR(120) NOT NULL,
-    address VARCHAR(255),
-    INDEX idx_stations_city (city),
-    INDEX idx_stations_name (name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `employee` (
+  `id` varchar(10) NOT NULL,
+  `userid` int(10) NOT NULL,
+  `honv` varchar(25) NOT NULL,
+  `tennv` varchar(25) NOT NULL,
+  `gioitinh` varchar(3) NOT NULL,
+  `ngaysinh` date NOT NULL,
+  `cmnd` varchar(13) NOT NULL,
+  `sdt` varchar(10) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `ngayvaolam` date NOT NULL,
+  `chucvu` varchar(10) NOT NULL,
+  `tinhtrang` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Routes table (Tuyến đường)
-CREATE TABLE IF NOT EXISTS routes (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    from_station_id BIGINT NOT NULL,
-    to_station_id BIGINT NOT NULL,
-    distance_km INT,
-    CONSTRAINT fk_routes_from_station FOREIGN KEY (from_station_id) 
-        REFERENCES stations(id) ON DELETE RESTRICT,
-    CONSTRAINT fk_routes_to_station FOREIGN KEY (to_station_id) 
-        REFERENCES stations(id) ON DELETE RESTRICT,
-    INDEX idx_routes_from_station (from_station_id),
-    INDEX idx_routes_to_station (to_station_id),
-    CONSTRAINT uk_routes_unique UNIQUE (from_station_id, to_station_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- --------------------------------------------------------
 
--- Buses table (Xe khách)
-CREATE TABLE IF NOT EXISTS buses (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    plate VARCHAR(25) NOT NULL,
-    seat_count INT,
-    CONSTRAINT uk_buses_plate UNIQUE (plate),
-    INDEX idx_buses_plate (plate)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Table structure for table `function`
+--
 
--- Seats table (Ghế ngồi)
-CREATE TABLE IF NOT EXISTS seats (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    bus_id BIGINT NOT NULL,
-    code VARCHAR(10) NOT NULL,
-    type VARCHAR(50),
-    CONSTRAINT fk_seats_bus FOREIGN KEY (bus_id) 
-        REFERENCES buses(id) ON DELETE CASCADE,
-    INDEX idx_seats_bus_id (bus_id),
-    INDEX idx_seats_code (code),
-    CONSTRAINT uk_seats_bus_code UNIQUE (bus_id, code)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `function` (
+  `machucnang` varchar(10) NOT NULL,
+  `tenchucnang` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Trips table (Chuyến đi)
-CREATE TABLE IF NOT EXISTS trips (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    route_id BIGINT NOT NULL,
-    bus_id BIGINT NOT NULL,
-    departure_time DATETIME NOT NULL,
-    arrival_time DATETIME NOT NULL,
-    price INT,
-    seats_total INT,
-    seats_booked INT DEFAULT 0,
-    CONSTRAINT fk_trips_route FOREIGN KEY (route_id) 
-        REFERENCES routes(id) ON DELETE RESTRICT,
-    CONSTRAINT fk_trips_bus FOREIGN KEY (bus_id) 
-        REFERENCES buses(id) ON DELETE RESTRICT,
-    INDEX idx_trips_route_id (route_id),
-    INDEX idx_trips_bus_id (bus_id),
-    INDEX idx_trips_departure_time (departure_time),
-    INDEX idx_trips_arrival_time (arrival_time)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- --------------------------------------------------------
 
--- Employee table (Nhân viên)
-CREATE TABLE IF NOT EXISTS employee (
-    id VARCHAR(255) PRIMARY KEY,
-    userid INT NOT NULL,
-    honv VARCHAR(100),
-    tennv VARCHAR(100),
-    gioitinh VARCHAR(10),
-    ngaysinh DATE,
-    cmnd VARCHAR(20),
-    sdt VARCHAR(20),
-    email VARCHAR(255),
-    ngayvaolam DATE,
-    chucvu VARCHAR(100),
-    tinhtrang INT DEFAULT 1,
-    INDEX idx_employee_userid (userid),
-    INDEX idx_employee_email (email),
-    INDEX idx_employee_cmnd (cmnd)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+--
+-- Table structure for table `functionpermission`
+--
 
--- ============================================
--- SAMPLE DATA (Optional)
--- ============================================
+CREATE TABLE `functionpermission` (
+  `machucnang` varchar(10) NOT NULL,
+  `maquyen` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Insert sample stations
-INSERT INTO stations(name, city, address) VALUES
-    ('Bến xe Miền Tây', 'Ho Chi Minh', '395 Kinh Dương Vương, An Lạc, Bình Tân, TP.HCM'),
-    ('Bến xe Miền Đông', 'Ho Chi Minh', '292 Đinh Bộ Lĩnh, Bình Thạnh, TP.HCM'),
-    ('Bến xe An Sương', 'Ho Chi Minh', 'Quốc lộ 22, An Sương, Hóc Môn, TP.HCM'),
-    ('Bến xe Đà Nẵng', 'Da Nang', 'Tôn Đức Thắng, Hải Châu, Đà Nẵng'),
-    ('Bến xe Miền Bắc', 'Ha Noi', 'Gia Lâm, Long Biên, Hà Nội'),
-    ('Bến xe Nước Ngầm', 'Ha Noi', 'Nguyễn Hoàng Tôn, Tây Mỗ, Nam Từ Liêm, Hà Nội')
-ON DUPLICATE KEY UPDATE name = VALUES(name);
+-- --------------------------------------------------------
 
--- Insert sample operators
-INSERT INTO operators(name, hotline) VALUES
-    ('Xe khách Phương Trang', '1900.6067'),
-    ('Xe khách Hoàng Long', '1900.6268'),
-    ('Xe khách Mai Linh', '1900.6066'),
-    ('Xe khách Phúc Xuyên', '1900.9112')
-ON DUPLICATE KEY UPDATE name = VALUES(name);
+--
+-- Table structure for table `news`
+--
 
--- ============================================
--- VERIFICATION QUERIES
--- ============================================
+CREATE TABLE `news` (
+  `id` int(10) NOT NULL,
+  `manv` varchar(10) NOT NULL,
+  `tieude` varchar(50) NOT NULL,
+  `noidung` varchar(1000) NOT NULL,
+  `ngaydang` date NOT NULL,
+  `trangthai` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Kiểm tra tables trong userdb
-USE userdb;
-SHOW TABLES;
+-- --------------------------------------------------------
 
--- Kiểm tra tables trong longdistancebus
-USE longdistancebus;
-SHOW TABLES;
+--
+-- Table structure for table `payment`
+--
 
--- ============================================
--- LƯU Ý
--- ============================================
--- 1. File này được tạo dựa trên các entity classes trong code
--- 2. Database structure:
---    - userdb: Dùng cho user-service
---    - longdistancebus: Dùng cho booking-service và staff-service
--- 3. Sử dụng CREATE TABLE IF NOT EXISTS để tránh lỗi nếu bảng đã tồn tại
--- 4. Nếu database đã có sẵn, hãy so sánh với cấu trúc hiện tại
+CREATE TABLE `payment` (
+  `id` varchar(10) NOT NULL,
+  `ngaytao` date NOT NULL,
+  `thanhtien` varchar(10) NOT NULL,
+  `trangthai` int(2) NOT NULL,
+  `userid` varchar(10) NOT NULL,
+  `employeeid` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paymentdetails`
+--
+
+CREATE TABLE `paymentdetails` (
+  `mahd` varchar(10) NOT NULL,
+  `ticketid` varchar(10) NOT NULL,
+  `tongtien` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permission`
+--
+
+CREATE TABLE `permission` (
+  `maquyen` varchar(10) NOT NULL,
+  `tenquyen` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `promotion`
+--
+
+CREATE TABLE `promotion` (
+  `id` varchar(10) NOT NULL,
+  `tripid` varchar(10) NOT NULL,
+  `magiamgia` varchar(10) NOT NULL,
+  `giambaonhieu` int(2) NOT NULL,
+  `ngaybatdau` date NOT NULL,
+  `ngayketthuc` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `route`
+--
+
+CREATE TABLE `route` (
+  `id` varchar(10) NOT NULL,
+  `diemdi` varchar(50) NOT NULL,
+  `diemden` varchar(50) NOT NULL,
+  `quanduong` int(10) NOT NULL,
+  `thoigian` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `seat`
+--
+
+CREATE TABLE `seat` (
+  `id` varchar(10) NOT NULL,
+  `busid` varchar(10) NOT NULL,
+  `soghe` int(3) NOT NULL,
+  `loai` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supportchat`
+--
+
+CREATE TABLE `supportchat` (
+  `id` int(11) NOT NULL,
+  `userid` varchar(10) NOT NULL,
+  `employeeid` varchar(10) NOT NULL,
+  `tinnhan` varchar(500) NOT NULL,
+  `thoigian` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ticket`
+--
+
+CREATE TABLE `ticket` (
+  `id` varchar(10) NOT NULL,
+  `tripid` varchar(10) NOT NULL,
+  `userid` varchar(10) NOT NULL,
+  `seatid` varchar(10) NOT NULL,
+  `ngaydat` date NOT NULL,
+  `tinhtrang` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trip`
+--
+
+CREATE TABLE `trip` (
+  `id` varchar(10) NOT NULL,
+  `routeid` varchar(10) NOT NULL,
+  `busid` varchar(10) NOT NULL,
+  `giokhoihanh` time NOT NULL,
+  `gioden` time NOT NULL,
+  `giave` int(25) NOT NULL,
+  `tinhtrang` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tripstop`
+--
+
+CREATE TABLE `tripstop` (
+  `id` varchar(10) NOT NULL,
+  `tripid` varchar(10) NOT NULL,
+  `thutudung` int(3) NOT NULL,
+  `tendiemdung` varchar(50) NOT NULL,
+  `diachi` varchar(50) NOT NULL,
+  `gioden` time NOT NULL,
+  `giodi` time NOT NULL,
+  `ghichu` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` varchar(10) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `sdt` varchar(10) NOT NULL,
+  `email` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `operators`
+--
+
+CREATE TABLE `operators` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(120) NOT NULL,
+  `hotline` varchar(30) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'ACTIVE',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_operators_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `account`
+--
+ALTER TABLE `account`
+  ADD KEY `fk_account_permission` (`maquyen`),
+  ADD KEY `fk_account_employee` (`id`);
+
+--
+-- Indexes for table `bus`
+--
+ALTER TABLE `bus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `employee`
+--
+ALTER TABLE `employee`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_employee_user` (`userid`);
+
+--
+-- Indexes for table `function`
+--
+ALTER TABLE `function`
+  ADD PRIMARY KEY (`machucnang`);
+
+--
+-- Indexes for table `functionpermission`
+--
+ALTER TABLE `functionpermission`
+  ADD KEY `fk_functionpermission_function` (`machucnang`),
+  ADD KEY `fk_functionpermission_permission` (`maquyen`);
+
+--
+-- Indexes for table `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_news_employee` (`manv`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_Payment_User` (`userid`),
+  ADD KEY `fk_Payment_Employee` (`employeeid`);
+
+--
+-- Indexes for table `paymentdetails`
+--
+ALTER TABLE `paymentdetails`
+  ADD KEY `fk_Paymentdetails_Payment` (`mahd`);
+
+--
+-- Indexes for table `permission`
+--
+ALTER TABLE `permission`
+  ADD PRIMARY KEY (`maquyen`);
+
+--
+-- Indexes for table `promotion`
+--
+ALTER TABLE `promotion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_promotion_trip` (`tripid`);
+
+--
+-- Indexes for table `route`
+--
+ALTER TABLE `route`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `seat`
+--
+ALTER TABLE `seat`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_seat_bus` (`busid`);
+
+--
+-- Indexes for table `supportchat`
+--
+ALTER TABLE `supportchat`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_SupportChat_Employee` (`employeeid`),
+  ADD KEY `fk_SupportChat_User` (`userid`);
+
+--
+-- Indexes for table `ticket`
+--
+ALTER TABLE `ticket`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_ticket_trip` (`tripid`),
+  ADD KEY `fk_ticket_seat` (`seatid`),
+  ADD KEY `fk_ticket_user` (`userid`);
+
+--
+-- Indexes for table `trip`
+--
+ALTER TABLE `trip`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_trip_route` (`routeid`),
+  ADD KEY `fk_trip_bus` (`busid`);
+
+--
+-- Indexes for table `tripstop`
+--
+ALTER TABLE `tripstop`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_tripstop_trip` (`tripid`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `news`
+--
+ALTER TABLE `news`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `supportchat`
+--
+ALTER TABLE `supportchat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `operators`
+--
+ALTER TABLE `operators`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `account`
+--
+ALTER TABLE `account`
+  ADD CONSTRAINT `fk_account_employee` FOREIGN KEY (`id`) REFERENCES `employee` (`id`),
+  ADD CONSTRAINT `fk_account_permission` FOREIGN KEY (`maquyen`) REFERENCES `permission` (`maquyen`),
+  ADD CONSTRAINT `fk_account_user` FOREIGN KEY (`id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `functionpermission`
+--
+ALTER TABLE `functionpermission`
+  ADD CONSTRAINT `fk_functionpermission_function` FOREIGN KEY (`machucnang`) REFERENCES `function` (`machucnang`),
+  ADD CONSTRAINT `fk_functionpermission_permission` FOREIGN KEY (`maquyen`) REFERENCES `permission` (`maquyen`);
+
+--
+-- Constraints for table `news`
+--
+ALTER TABLE `news`
+  ADD CONSTRAINT `fk_news_employee` FOREIGN KEY (`manv`) REFERENCES `employee` (`id`);
+
+--
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `fk_Payment_Employee` FOREIGN KEY (`employeeid`) REFERENCES `employee` (`id`),
+  ADD CONSTRAINT `fk_Payment_User` FOREIGN KEY (`userid`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `paymentdetails`
+--
+ALTER TABLE `paymentdetails`
+  ADD CONSTRAINT `fk_Paymentdetails_Payment` FOREIGN KEY (`mahd`) REFERENCES `payment` (`id`);
+
+--
+-- Constraints for table `promotion`
+--
+ALTER TABLE `promotion`
+  ADD CONSTRAINT `fk_promotion_trip` FOREIGN KEY (`tripid`) REFERENCES `trip` (`id`);
+
+--
+-- Constraints for table `seat`
+--
+ALTER TABLE `seat`
+  ADD CONSTRAINT `fk_seat_bus` FOREIGN KEY (`busid`) REFERENCES `bus` (`id`);
+
+--
+-- Constraints for table `supportchat`
+--
+ALTER TABLE `supportchat`
+  ADD CONSTRAINT `fk_SupportChat_Employee` FOREIGN KEY (`employeeid`) REFERENCES `employee` (`id`),
+  ADD CONSTRAINT `fk_SupportChat_User` FOREIGN KEY (`userid`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `ticket`
+--
+ALTER TABLE `ticket`
+  ADD CONSTRAINT `fk_ticket_seat` FOREIGN KEY (`seatid`) REFERENCES `seat` (`id`),
+  ADD CONSTRAINT `fk_ticket_trip` FOREIGN KEY (`tripid`) REFERENCES `trip` (`id`),
+  ADD CONSTRAINT `fk_ticket_user` FOREIGN KEY (`userid`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `trip`
+--
+ALTER TABLE `trip`
+  ADD CONSTRAINT `fk_trip_bus` FOREIGN KEY (`busid`) REFERENCES `bus` (`id`),
+  ADD CONSTRAINT `fk_trip_route` FOREIGN KEY (`routeid`) REFERENCES `route` (`id`);
+
+--
+-- Constraints for table `tripstop`
+--
+ALTER TABLE `tripstop`
+  ADD CONSTRAINT `fk_tripstop_trip` FOREIGN KEY (`tripid`) REFERENCES `trip` (`id`);
+
+--
+-- Dumping data for table `operators`
+--
+
+INSERT INTO `operators` (`name`, `hotline`, `address`, `description`, `status`) VALUES
+('Xe Khách Phương Trang', '1900 6067', '123 Đường Lê Lợi, Quận 1, TP. Hồ Chí Minh', 'Nhà xe uy tín với hơn 20 năm kinh nghiệm, chuyên phục vụ các tuyến đường dài liên tỉnh. Đội ngũ lái xe chuyên nghiệp, xe đời mới, tiện nghi hiện đại.', 'ACTIVE'),
+('Xe Khách Hoàng Long', '1900 6068', '456 Đường Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh', 'Nhà xe hàng đầu với hệ thống xe giường nằm cao cấp, phục vụ các tuyến đường dài. Cam kết an toàn và chất lượng phục vụ tốt nhất.', 'ACTIVE'),
+('Xe Khách Mai Linh', '1900 6069', '789 Đường Trần Hưng Đạo, Quận 5, TP. Hồ Chí Minh', 'Thương hiệu xe khách nổi tiếng với dịch vụ chất lượng cao, xe đời mới, ghế ngồi thoải mái. Phục vụ đa dạng các tuyến đường trong và ngoài thành phố.', 'ACTIVE'),
+('Xe Khách Thành Bưởi', '1900 6070', '321 Đường Cách Mạng Tháng 8, Quận 10, TP. Hồ Chí Minh', 'Nhà xe chuyên các tuyến miền Tây, miền Đông. Xe sạch sẽ, đúng giờ, giá cả hợp lý. Được nhiều khách hàng tin tưởng và lựa chọn.', 'ACTIVE'),
+('Xe Khách Kumho Samco', '1900 6071', '654 Đường Võ Văn Tần, Quận 3, TP. Hồ Chí Minh', 'Nhà xe quốc tế với tiêu chuẩn chất lượng cao. Xe giường nằm đời mới, có wifi, sạc điện thoại. Phục vụ các tuyến đường dài với đội ngũ nhân viên chuyên nghiệp.', 'ACTIVE'),
+('Xe Khách Phúc Xuyên', '1900 6072', '987 Đường Lý Tự Trọng, Quận 1, TP. Hồ Chí Minh', 'Nhà xe chuyên tuyến miền Trung và miền Bắc. Xe đời mới, an toàn, giá cả cạnh tranh. Được đánh giá cao về chất lượng phục vụ và đúng giờ.', 'ACTIVE'),
+('Xe Khách Đồng Phước', '1900 6073', '147 Đường Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh', 'Nhà xe uy tín với nhiều năm kinh nghiệm. Chuyên các tuyến đường nội thành và liên tỉnh. Xe sạch sẽ, lái xe có kinh nghiệm, phục vụ tận tình.', 'ACTIVE'),
+('Xe Khách Thanh Thủy', '1900 6074', '258 Đường Hùng Vương, Quận 5, TP. Hồ Chí Minh', 'Nhà xe chuyên tuyến miền Tây. Xe đời mới, tiện nghi đầy đủ. Giá vé hợp lý, phục vụ chu đáo. Được khách hàng đánh giá cao về chất lượng.', 'ACTIVE'),
+('Xe Khách Hải Âu', '1900 6075', '369 Đường Nguyễn Trãi, Quận 1, TP. Hồ Chí Minh', 'Nhà xe chuyên tuyến biển và miền Trung. Xe giường nằm cao cấp, có điều hòa, wifi miễn phí. Đội ngũ nhân viên nhiệt tình, chuyên nghiệp.', 'ACTIVE'),
+('Xe Khách Sài Gòn', '1900 6076', '741 Đường Điện Biên Phủ, Quận Bình Thạnh, TP. Hồ Chí Minh', 'Nhà xe địa phương với nhiều năm phục vụ khách hàng. Chuyên các tuyến nội thành và ngoại thành. Xe sạch sẽ, giá cả phải chăng, phục vụ tận tâm.', 'ACTIVE');
+
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getTripDetail } from "../lib/api";
+import { getTripDetail } from "../../lib/api";
 
 function fmtTime(iso) {
   if (!iso) return "";

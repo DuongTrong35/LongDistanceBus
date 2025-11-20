@@ -2,18 +2,20 @@
 import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Trips from "./pages/Trips";
-import TripDetail from "./pages/TripDetail";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import Forgot from "./pages/Auth/Forgot";
+import Trips from "./pages/Trips/Trips";
+import TripDetail from "./pages/Trips/TripDetail";
 import RequireAuth from "./context/RequireAuth";
 import AppShell from "./components/AppShell";
-import Staff from "./pages/Staff/Staff"
+import Staff from "./pages/Staff/Staff";
 import AddStaff from "./pages/Staff/AddStaff"
 import UpdateStaff from "./pages/Staff/UpdateStaff"
 import SeatSelection from "./pages/FindRide/SeatSelection"
 import FindRide from "./pages/FindRide/FindRide"
+import Support from "./pages/Support/Support";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css"; // nếu muốn xài icon
@@ -28,6 +30,8 @@ export default function App() {
 				<Route path="/trips/:id" element={<TripDetail />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
+				<Route path="/forgot" element={<Forgot />} />
+				<Route path="/support" element={<Support />} />
 				<Route path="/employee" element={<Staff />} />
 				<Route path="/employee/addemployee" element={<AddStaff />} />
 				<Route path="/employee/updateemployee" element={<UpdateStaff />} />

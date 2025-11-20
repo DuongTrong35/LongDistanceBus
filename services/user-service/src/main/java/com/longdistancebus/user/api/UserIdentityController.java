@@ -1,46 +1,30 @@
 package com.longdistancebus.user.api;
 
-import com.longdistancebus.user.api.dto.RegisterResponse;
-import com.longdistancebus.user.domain.Role;
 import com.longdistancebus.user.domain.User;
 import com.longdistancebus.user.repo.UserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping({"/auth", "/api/auth"})
+@RequestMapping("/api/user")
 public class UserIdentityController {
 
-    private final UserRepository users;
+    @Autowired
+    private UserRepository userRepository;
 
-    public UserIdentityController(UserRepository users) {
-        this.users = users;
+    @GetMapping("/findByPhone")
+    public User getUserByPhone(@RequestParam String phoneNumber) {
+        // Sử dụng số điện thoại thay vì email
+        User user = userRepository.findByPhoneNumber(phoneNumber);
+        return user;
     }
 
-    @GetMapping("/me")
-    public RegisterResponse me(Authentication authentication) {
-        if (!(authentication instanceof JwtAuthenticationToken token)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+    @GetMapping("/getUser")
+    public String getEmail(@RequestParam Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            return user.getPhoneNumber();  // Trả về số điện thoại thay vì email
         }
-        String email = token.getToken().getSubject();
-        User user = users.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-
-        List<String> roles = user.getRoles().stream().map(Role::getName).toList();
-        return new RegisterResponse(
-                user.getId(),
-                user.getEmail(),
-                user.getFullName(),
-                user.getStatus(),
-                user.getCreatedAt(),
-                roles
-        );
+        return "User not found!";
     }
 }

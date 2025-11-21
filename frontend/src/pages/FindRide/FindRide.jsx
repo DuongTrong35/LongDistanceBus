@@ -4,6 +4,7 @@ import "./FindRide.css";
 
 function FindRide() {
   const id = "PTHCMX1"; // id xe cần lấy ghế
+  const pricetmp = 350000;
   const [ghetren, setGheTren] = useState([]);
   const [gheduoi, setGheDuoi] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -320,23 +321,7 @@ function FindRide() {
             </div>
 
             <div className="HomeLeftCustomerCenterTimeCenter">
-              <div className="HomeLeftCustomerCenterTimeCenterFrom">
-                <p>ĐIỂM ĐÓN</p>
-                <div className="HomeLeftCustomerCenterTimeCenterFromvp">
-                  <div className="HomeLeftCustomerCenterTimeCenterFromvpchose">
-                    <input type="radio" name="pickup" value="benxe" />
-                    <span className="label-text active">Bến xe/VP</span>
-                    <div className="input-arrow-wrapper">
-                      <input
-                        type="text"
-                        placeholder="Đồng Đen"
-                        className="input-with-arrow"
-                        onClick={() => setShowList((prev) => !prev)}
-                        value={SelectedValueected ?? ""}
-                        readOnly
-                      />
-                    </div>
-                    {showList && (
+               {showList && (
                       <div className="HomeLeftCustomerCenterTimeCover">
                         <div className="search-wrapper">
                           <span className="search-icon">🔍</span>
@@ -364,6 +349,23 @@ function FindRide() {
                         <div className="custom-divider"></div>
                       </div>
                     )}
+              <div className="HomeLeftCustomerCenterTimeCenterFrom">
+                <p>ĐIỂM ĐÓN</p>
+                <div className="HomeLeftCustomerCenterTimeCenterFromvp">
+                  <div className="HomeLeftCustomerCenterTimeCenterFromvpchose">
+                    <input type="radio" name="pickup" value="benxe" />
+                    <span className="label-text active">Bến xe/VP</span>
+                    <div className="input-arrow-wrapper">
+                      <input
+                        type="text"
+                        placeholder="Đồng Đen"
+                        className="input-with-arrow"
+                        onClick={() => setShowList((prev) => !prev)}
+                        value={SelectedValueected ?? ""}
+                        readOnly
+                      />
+                    </div>
+                   
                   </div>
                 </div>
                 <div style={{ marginTop: "18px" }}>
@@ -408,7 +410,7 @@ function FindRide() {
                         readOnly
                       />
                     </div>
-                    {showList && (
+                    {/* {showList && (
                       <div className="HomeLeftCustomerCenterTimeCover">
                         <div className="search-wrapper">
                           <span className="search-icon">🔍</span>
@@ -435,7 +437,7 @@ function FindRide() {
                         </div>
                         <div className="custom-divider"></div>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>
@@ -497,7 +499,10 @@ function FindRide() {
               >
                 Số lượng:
               </span>
-              <span className="text-right text-black">4 Ghế</span>
+              <span className="text-right text-black">
+                {" "}
+                {selectedSeats.length} Ghế
+              </span>
             </div>
 
             <div className="mt-2 flex justify-between">
@@ -507,7 +512,13 @@ function FindRide() {
               >
                 Số ghế:
               </span>
-              <span className="text-right text-black">1</span>
+
+              <span className="text-right text-black">
+                {" "}
+                {selectedSeats.length > 0
+                  ? selectedSeats.map((seat) => seat.slice(-2)).join(", ")
+                  : "Chưa chọn"}
+              </span>
             </div>
 
             <div className="mt-2 flex justify-between">
@@ -517,7 +528,10 @@ function FindRide() {
               >
                 Tổng tiền lượt đi:
               </span>
-              <span className="text-right text-black">1.200.000đ</span>
+              <span className="text-right text-black">
+                {" "}
+                {pricetmp * selectedSeats.length} đồng
+              </span>
             </div>
           </div>
 
@@ -533,7 +547,10 @@ function FindRide() {
               >
                 Gía vé lượt đi:
               </span>
-              <span className="text-right text-black">1.200.000đ</span>
+              <span className="text-right text-black">
+                {" "}
+                {pricetmp * selectedSeats.length} đồng
+              </span>
             </div>
             <div className="mt-2 flex justify-between">
               <span
@@ -554,7 +571,10 @@ function FindRide() {
               >
                 Tổng tiền:
               </span>
-              <span className="text-right text-black">1.200.000đ</span>
+              <span className="text-right text-black">
+                {" "}
+                {pricetmp * selectedSeats.length} đồng
+              </span>
             </div>
           </div>
         </div>

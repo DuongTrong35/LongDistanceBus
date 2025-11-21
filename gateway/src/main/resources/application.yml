@@ -16,7 +16,7 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: staff-service
+        - id: seat-service
           uri: http://localhost:8084
           predicates:
             - Path=/api/seats/**

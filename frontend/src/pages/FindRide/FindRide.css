@@ -193,8 +193,10 @@ width: 47%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     margin-left: -42px;
     height: 300px;
-    margin-top: 16px;
-    position: relative;
+    /* margin-top: 16px; */
+    margin-top: 130px;
+    /* position: relative; */
+    position: absolute;
     z-index: 9999;
 }
 /* ------------------------------------------------------------------------------------------ */

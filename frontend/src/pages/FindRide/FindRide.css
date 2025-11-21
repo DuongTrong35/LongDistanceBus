@@ -13,7 +13,7 @@
 
 }
 .HomeContainer .HomeCenter{
-    height: 600px;
+    height: 1400px;
     background: burlywood;
     width: 100%;
     display: flex;
@@ -132,14 +132,297 @@
   background: #fff;
   max-width: 750px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+   /* margin-left: 156px; */
+   margin: 30px auto;
+    height: 555px;
 }
 .HomeLeftCustomer .HomeLeftCustomerCenter{
-  height: 750px;
+  height: 498px;
   display: flex;
 }
 .HomeLeftCustomer .HomeLeftCustomerCenter .HomeLeftCustomerLeft{
-width: 50%;
+width: 53%;
 }
 .HomeLeftCustomer .HomeLeftCustomerCenter .HomeLeftCustomerRight{
-width: 50%;
+width: 47%;
+}
+
+/* -------------------------------------------------------- */
+
+.HomeLeftCustomerLeft{
+    height: 300px;
+}
+.HomeLeftCustomerLeft .HomeLeftCustomerLeftNamCustomer{
+  height: 25px;
+  display: flex;
+  margin-top: 25px;
+}
+/* ------------------------------------------------------------------- */
+.HomeLeftCustomerCenterTime{
+  width: 750px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px;
+    background: #fff;
+    max-width: 750px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    /* margin-left: 156px; */
+    height: 325px;
+    /* margin-top: 30px; */
+    margin: 30px auto;
+}
+.HomeLeftCustomerCenterTimeCenter{
+  display: flex;
+  width: 100%;
+}
+.HomeLeftCustomerCenterTimeCenter .HomeLeftCustomerCenterTimeCenterFrom{
+  width: 50%;
+
+}
+.HomeLeftCustomerCenterTimeCenter .HomeLeftCustomerCenterTimeCenterTo{
+  width: 50%;
+}
+
+.HomeLeftCustomerCenterTimeCover{
+    width: 425px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    /* padding: 20px; */
+    background: #fff;
+    max-width: 750px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-left: -42px;
+    height: 300px;
+    margin-top: 16px;
+    position: relative;
+    z-index: 9999;
+}
+/* ------------------------------------------------------------------------------------------ */
+.radio-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.radio-item input {
+  display: none;
+}
+
+/* Vòng tròn */
+.custom-radio {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  margin-right: 8px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+/* Khi chọn */
+.radio-item input:checked + .custom-radio {
+  border-color: #f15a24;
+}
+
+.radio-item input:checked + .custom-radio::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: #f15a24;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Text */
+.label-text {
+  font-size: 15px;
+  color: #4a4a4a;
+  font-weight: 500;
+}
+
+/* Text khi active */
+.label-text.active,
+.radio-item input:checked ~ .label-text {
+  color: #f15a24;
+  font-weight: 600;
+}
+/* ---------------------------- Input  */
+.input-arrow-wrapper {
+  position: relative;
+  width: 320px;
+  margin-top: 15px;
+}
+
+.input-with-arrow {
+  width: 100%;
+  padding: 6px 32px 6px 12px; /* chừa khoảng bên phải cho icon */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.input-arrow-wrapper::after {
+  content: "▼";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: gray;
+  pointer-events: none;
+}
+/* ---------------------------------------------------------------------- */
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin-left: 10px;
+    /* margin-right: 3px; */
+    margin-top: 20px;
+}
+
+.search-input {
+  width: 94%;
+  padding: 8px 16px 8px 40px; /* chừa bên trái cho icon */
+  border: 1px solid #e0e0e0;
+  border-radius: 40px;
+  font-size: 15px;
+  background-color: #f9f9f9;
+  outline: none;
+  color: #333;
+}
+
+.search-input::placeholder {
+  color: #b8b8b8;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #b8b8b8;
+  pointer-events: none;
+}
+.HomeLeftCustomerCenterTimeItem{
+  display: flex;
+  margin-top: 12px;
+      padding-left: 15px;
+
+}
+.HomeLeftCustomerCenterTimeItem .HomeLeftCustomerCenterTimeItemLeft{
+  margin-top: 14px;
+    height: 20px;
+}
+.HomeLeftCustomerCenterTimeItem .HomeLeftCustomerCenterTimeItemCenter{
+margin-left: 8px;
+margin-right: 70px;
+}
+.HomeLeftCustomerCenterTimeItem .HomeLeftCustomerCenterTimeItemCenter span{
+  display: block;
+}
+.HomeLeftCustomerCenterTimeItem .link-xemvitri {
+  color: #f34c1e;         /* màu cam */
+  font-size: 18px;        /* giống hình */
+  text-decoration: none;  /* bỏ gạch chân */
+  cursor: pointer;
+  font-weight: 400;       /* độ đậm nhẹ */
+}
+
+.HomeLeftCustomerCenterTimeItem .link-xemvitri:hover {
+  text-decoration: underline; /* hover có thể gạch chân */
+}
+.custom-divider {
+  width: 100%;
+  height: 1px;
+  background: #e5e7eb;       /* màu xám nhạt */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* bóng mờ nhẹ */
+  margin: 10px 0;
+}
+/* ---------------------------------------------------------------------------- */
+.HomeLeftCustomerCenterBottom {
+  width: 750px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 20px;
+  background: #fff;
+  max-width: 750px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  /* margin-left: 156px;
+  margin-top: 30px; */
+  margin: 30px auto;
+
+  display: flex;               /* quan trọng */
+  align-items: center;         /* căn giữa theo chiều dọc */
+  justify-content: space-between; /* căn 2 bên */
+}
+/* ---------------------------------------------------------- */
+.HomeRightDepartureInformation{
+  width: 350px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px;
+    background: #fff;
+    max-width: 750px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-left: 30px;
+    height: 220px;
+    margin-top: 30px;
+}
+.HomeRightDeparturePrice{
+  width: 350px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px;
+    background: #fff;
+    max-width: 750px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-left: 30px;
+    height: 175px;
+    margin-top: 30px;
+}
+.price-detail {
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.price-detail .title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.price-detail .icon {
+  margin-left: 8px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid orange;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: orange;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.customerline {
+  width: 100%;
+  height: 1px;
+  /* background-color: #e5e5e5; xám nhạt */
+  background-color: rgba(0, 0, 0, 0.1);
+
+  margin: 10px 0;
 }

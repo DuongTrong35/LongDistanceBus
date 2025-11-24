@@ -1,55 +1,38 @@
 package com.longdistancebus.user.service;
 
-import com.longdistancebus.user.api.dto.LoginRequest;
 import com.longdistancebus.user.api.dto.RegisterRequest;
-import com.longdistancebus.user.domain.Role;
+import com.longdistancebus.user.api.dto.RegisterResponse;
 import com.longdistancebus.user.domain.User;
-import com.longdistancebus.user.repo.RoleRepository;
 import com.longdistancebus.user.repo.UserRepository;
-import com.longdistancebus.user.security.JwtService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
-    private final UserRepository users;
-    private final RoleRepository roles;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
 
-    public AuthService(UserRepository users, RoleRepository roles,
-                       PasswordEncoder passwordEncoder, JwtService jwtService) {
-        this.users = users;
-        this.roles = roles;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-    }
+    @Autowired
+    private UserRepository userRepository; // Đảm bảo có repository để lưu người dùng
 
-    public User register(RegisterRequest req) {
-        String email = req.getEmail().trim().toLowerCase();
-        if (users.existsByEmail(email)) {
-            throw new IllegalArgumentException("Email already registered");
+    public RegisterResponse register(RegisterRequest request) {
+        // Kiểm tra số điện thoại có tồn tại không
+        if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
+            RegisterResponse response = new RegisterResponse();
+            response.setMessage("Số điện thoại đã được đăng ký.");
+            return response;
         }
-        User u = new User();
-        u.setEmail(email);
-        u.setFullName(req.getFullName());
-        u.setPasswordHash(passwordEncoder.encode(req.getPassword()));
-        Role userRole = roles.findByName("USER").orElseGet(() -> roles.save(new Role("USER")));
-        u.getRoles().add(userRole);
-        return users.save(u);
-    }
 
-    public String login(LoginRequest req) {
-        String email = req.getEmail().trim().toLowerCase();
-        User u = users.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
-        if (!passwordEncoder.matches(req.getPassword(), u.getPasswordHash())) {
-            throw new IllegalArgumentException("Invalid credentials");
-        }
-        var roleNames = u.getRoles().stream().map(Role::getName).collect(Collectors.toList());
-        return jwtService.generateAccessToken(u.getId(), u.getEmail(), roleNames);
+        // Logic đăng ký: tạo người dùng mới và lưu vào database
+        User newUser = new User();
+        newUser.setPhoneNumber(request.getPhoneNumber());
+        newUser.setFullName(request.getFullName());
+        newUser.setPasswordHash(request.getPassword());  // Mã hóa mật khẩu trước khi lưu
+
+        // Lưu vào database
+        userRepository.save(newUser);
+
+        RegisterResponse response = new RegisterResponse();
+        response.setMessage("Đăng ký thành công!");
+        response.setUserId(newUser.getId()); // Trả về userId hoặc thông tin khác
+        return response;
     }
 }

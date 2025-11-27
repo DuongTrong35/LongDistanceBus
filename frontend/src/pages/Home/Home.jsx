@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 
+
 function DepartDateField({ value, onChange, min }) {
   return (
     <label className="ld-field">
@@ -33,6 +34,10 @@ function ReturnDateField({ value, onChange, min }) {
 }
 
 export default function Home() {
+    const navigate = useNavigate();
+const handlelt = () => {
+  navigate("/cd", {});
+};
   const [tripType, setTripType] = useState("oneway");   // "oneway" | "roundtrip"
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -86,7 +91,7 @@ export default function Home() {
 
           <nav className="ld-nav">
             <span className="ld-nav-link ld-nav-link--active">Trang chủ</span>
-            <span className="ld-nav-link">Lịch trình</span>
+            <span className="ld-nav-link" onClick={handlelt}>Lịch trình</span>
             <span className="ld-nav-link">Tra cứu vé</span>
             <span className="ld-nav-link">Tin tức</span>
             <span className="ld-nav-link">Hóa đơn</span>

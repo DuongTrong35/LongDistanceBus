@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate,useLocation  } from "react-router-dom";
+
 import axios from "axios";
 import logoweb from "../../assets/konoha.png";
 import "./FindRide.css";
-import { useLocation } from "react-router-dom";
 
 function FindRide() {
   // const { id } = useLocation();
+    const navigate = useNavigate();
+
   const { state } = useLocation();
 const id = state?.busid;  // lấy busid
 
@@ -173,6 +176,31 @@ console.log("BUS ID:", id);
     setSelectedValueectedBack(value);
     setShowListBack(false);
   };
+  const [customer, setCustomer] = useState({
+  name: "",
+  phone: "",
+  email: ""
+});
+const departureInfo = {
+  from: SelectedValueected,
+  to: SelectedValueectedBack,
+  time: `${new Date().toLocaleTimeString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  })} ${new Date().toLocaleDateString("vi-VN")}`,
+  seatCount: selectedSeats.length,
+  seats: selectedSeats.map(s => s.slice(-2)),
+  totalPrice: pricetmp * selectedSeats.length
+};
+const handleNextPage = () => {
+  navigate("/tt", {
+    state: {
+      customer,
+      departureInfo
+    }
+  });
+};
+
   return (
     <div className="HomeContainer">
       {/* <div className="HomeBanner"> Chọn ghế xe {id}</div> */}
@@ -265,6 +293,8 @@ console.log("BUS ID:", id);
                 <input
                   type="text"
                   style={{ width: "350px", padding: "8px 12px" }}
+                   value={customer.name}
+  onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
                 />
 
                 <div className="HomeLeftCustomerLeftNamCustomer">
@@ -274,6 +304,8 @@ console.log("BUS ID:", id);
                 <input
                   type="text"
                   style={{ width: "350px", padding: "8px 12px" }}
+                   value={customer.phone}
+  onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
                 />
 
                 <div className="HomeLeftCustomerLeftNamCustomer">
@@ -283,6 +315,8 @@ console.log("BUS ID:", id);
                 <input
                   type="text"
                   style={{ width: "350px", padding: "8px 12px" }}
+                    value={customer.email}
+  onChange={(e) => setCustomer({ ...customer, email: e.target.value })}
                 />
               </div>
               <div className="HomeLeftCustomerRight">
@@ -339,7 +373,7 @@ console.log("BUS ID:", id);
                 </p>
               </div>
             </div>
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -364,7 +398,7 @@ console.log("BUS ID:", id);
                 </a>
                 đặt vé &amp; chính sách bảo mật thông tin của KONOHA BUS
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="HomeLeftCustomerCenterTime">
             <div
@@ -609,6 +643,7 @@ console.log("BUS ID:", id);
               <button
                 type="button"
                 className="ant-btn ant-btn-round ant-btn-default button-default active w-28"
+                onClick={handleNextPage }
               >
                 <span>Thanh toán</span>
               </button>

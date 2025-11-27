@@ -1,7 +1,9 @@
 import "./UpdateOperator.css";
+import "./operatorShared.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import HomeContainerLayout from "../../components/HomeContainerLayout";
 
 function UpdateOperator() {
   const navigate = useNavigate();
@@ -94,7 +96,53 @@ function UpdateOperator() {
     }
   };
 
-  return (
+  const headerContent = (
+    <div className="header-wrapper">
+      <div className="header-inner">
+        <div className="header-left">
+          <div className="lang">
+            <span className="flag">✏️</span>
+            <span className="text">Update</span>
+          </div>
+        </div>
+        <div className="header-center">
+          <h2 className="route">Cập nhật nhà xe</h2>
+          <p className="date">Điều chỉnh thông tin đối tác hiện có</p>
+        </div>
+        <div className="header-right">
+          <div className="profile">
+            <span className="avatar">🧑‍💼</span>
+            <span className="name">Operator Admin</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const rightContent = (
+    <div className="operator-right-stack">
+      <div className="operator-summary-card">
+        <h3>Nhắc nhở quan trọng</h3>
+        <p>Thay đổi trạng thái sẽ ảnh hưởng trực tiếp tới khả năng hiển thị trong danh sách.</p>
+        <ul className="operator-summary-list">
+          <li>
+            <span>Lần cập nhật gần nhất</span>
+            <span>{formData.name ? "Vừa tải" : "--"}</span>
+          </li>
+          <li>
+            <span>Trạng thái hiện tại</span>
+            <span>{formData.status || "ACTIVE"}</span>
+          </li>
+        </ul>
+      </div>
+      <div className="operator-side-note">
+        Nếu nhà xe tạm ngưng hoạt động, hãy chuyển sang trạng thái <strong>INACTIVE</strong> thay vì xoá
+        để giữ lịch sử dữ liệu.
+      </div>
+    </div>
+  );
+
+  const leftContent = (
     <div className="container-fluid p-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Cập nhật nhà xe</h2>
@@ -199,7 +247,14 @@ function UpdateOperator() {
       </div>
     </div>
   );
+
+  return (
+    <HomeContainerLayout
+      headerContent={headerContent}
+      leftContent={leftContent}
+      rightContent={rightContent}
+    />
+  );
 }
 
 export default UpdateOperator;
-

@@ -1,7 +1,9 @@
 import "./AddOperator.css";
+import "./operatorShared.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import HomeContainerLayout from "../../components/HomeContainerLayout";
 
 function AddOperator() {
   const navigate = useNavigate();
@@ -60,7 +62,53 @@ function AddOperator() {
     }
   };
 
-  return (
+  const headerContent = (
+    <div className="header-wrapper">
+      <div className="header-inner">
+        <div className="header-left">
+          <div className="lang">
+            <span className="flag">➕</span>
+            <span className="text">Create</span>
+          </div>
+        </div>
+        <div className="header-center">
+          <h2 className="route">Thêm nhà xe mới</h2>
+          <p className="date">Bổ sung đối tác vận hành vào hệ thống</p>
+        </div>
+        <div className="header-right">
+          <div className="profile">
+            <span className="avatar">👩‍💼</span>
+            <span className="name">Operator Admin</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const rightContent = (
+    <div className="operator-right-stack">
+      <div className="operator-summary-card">
+        <h3>Gợi ý thông tin</h3>
+        <p>Nhập đầy đủ tên, hotline, địa chỉ và mô tả để người dùng dễ dàng liên hệ.</p>
+        <ul className="operator-summary-list">
+          <li>
+            <span>Trạng thái mặc định</span>
+            <span>ACTIVE</span>
+          </li>
+          <li>
+            <span>Hotline</span>
+            <span>Tùy chọn</span>
+          </li>
+        </ul>
+      </div>
+      <div className="operator-side-note">
+        Sau khi lưu, thông tin nhà xe sẽ xuất hiện ngay trong danh sách. Bạn có thể chỉnh sửa
+        bất cứ lúc nào ở màn hình “Cập nhật nhà xe”.
+      </div>
+    </div>
+  );
+
+  const leftContent = (
     <div className="container-fluid p-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Thêm nhà xe mới</h2>
@@ -152,7 +200,14 @@ function AddOperator() {
       </div>
     </div>
   );
+
+  return (
+    <HomeContainerLayout
+      headerContent={headerContent}
+      leftContent={leftContent}
+      rightContent={rightContent}
+    />
+  );
 }
 
 export default AddOperator;
-

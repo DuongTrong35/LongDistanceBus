@@ -1,0 +1,153 @@
+/* ===== PAGE LAYOUT ===== */
+.page {
+  min-height: 100vh;
+  background: #f3f4f6;
+  padding: 24px;
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ===== TITLES ===== */
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ===== FILTER BUTTONS ===== */
+.filters {
+  display: flex;
+  gap: 12px;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border: 1px solid #dcdcdc;
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.filter-btn:hover {
+  background: #f0f0f0;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.time {
+  font-size: 26px;
+  font-weight: 600;
+  color: #222;
+}
+
+.subtext {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.center-info {
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+}
+
+.tag-row {
+  display: flex;
+  gap: 14px;
+  font-size: 14px;
+  color: #666;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  color: #e63946;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.choose-btn {
+  background: #fb923c;
+  color: white;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.choose-btn:hover {
+  background: #f97316;
+}
+
+.link-row {
+  margin-top: 6px;
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #2563eb;
+  cursor: pointer;
+}
+
+.link-row span:hover {
+  text-decoration: underline;
+}
+
+/* ===== LOGIN BOX ===== */
+.login-box {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.08);
+  border-left: 4px solid #3b82f6;
+}
+
+.login-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.login-text {
+  font-size: 14px;
+  color: #666;
+  margin-top: 6px;
+}
+
+.login-btn {
+  margin-top: 10px;
+  color: #2563eb;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}

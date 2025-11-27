@@ -10,8 +10,7 @@ function Busroute() {
 
   const navigate = useNavigate();
   const handleFindTrip = (id) => {
-    // navigate(`/timchuyenxe/${id}`);
-    console.log("Test:", id);
+    navigate(`/timchuyenxe/${id}`);
   };
 
   const [dscd, setdscd] = useState([]);

@@ -2,9 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import logoweb from "../../assets/konoha.png";
 import "./FindRide.css";
+import { useLocation } from "react-router-dom";
 
 function FindRide() {
-  const id = "PTHCMX1"; // id xe cần lấy ghế
+  // const { id } = useLocation();
+  const { state } = useLocation();
+const id = state?.busid;  // lấy busid
+
+console.log("STATE NHẬN ĐƯỢC:", state);
+console.log("BUS ID:", id);
+  // const id = "PTHCMX1"; // id xe cần lấy ghế
   const pricetmp = 350000;
   const [ghetren, setGheTren] = useState([]);
   const [gheduoi, setGheDuoi] = useState([]);
@@ -55,6 +62,8 @@ function FindRide() {
 
         setSoldSeats(data.filter((s) => s.tinhtrang === 1).map((s) => s.id));
       } catch (err) {
+        console.log("Lỗi axios:", err);
+
         console.error(err);
         setError(
           "Không thể tải dữ liệu ghế! (Lỗi 401 có thể do thiếu token hoặc sai CORS)"

@@ -39,13 +39,11 @@
         <module>services/user-service</module>
         <module>services/staff-service</module>
         <module>services/seat-service</module>
-<<<<<<< HEAD
         <module>services/allroute-service</module>
         <module>services/schedule-service</module>
-=======
         <module>services/operator-service</module>
         <module>services/review-service</module>
->>>>>>> 42f0417cd0e51961594f2d6858d692d0d24e7551
+        <module>services/payment-service</module>
     </modules>
 
     <build>

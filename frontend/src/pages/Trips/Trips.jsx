@@ -111,11 +111,11 @@ const id = state?.id;  // lấy busid
             {dstrip[0]?.diemdi} - {dstrip[0]?.diemden} ({dstrip.length})
           </h1>
 
-          <div className="filters">
+          {/* <div className="filters">
             <button className="filter-btn">Giá rẻ bất ngờ</button>
             <button className="filter-btn">Giờ khởi hành</button>
             <button className="filter-btn">Ghế trống</button>
-          </div>
+          </div> */}
 
           {dstrip.length > 0 &&
             dstrip.map((trip, index) => (

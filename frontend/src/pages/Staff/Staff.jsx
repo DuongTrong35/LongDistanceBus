@@ -1,10 +1,18 @@
 import "./Staff.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link, useLocation} from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
-
+const navItems = [
+  { to: "/", label: "Trang chủ", icon: "🏠" },
+  { to: "/trips", label: "Tìm chuyến", icon: "🚌" },
+  { to: "/employee", label: "Nhân viên", icon: "👨‍💻" },
+  { to: "/operators", label: "Nhà xe", icon: "🚐" },
+];
 function Staff() {
   const navigate = useNavigate();
+    const { isAuthed, fullName, logout } = useAuth();
+  const { pathname } = useLocation();
   const ClickAddStaff = () => {
     navigate("/employee/addemployee");
   };
@@ -108,7 +116,49 @@ function Staff() {
   // }, []);
 
   return (
-    <div className="col-md-12">
+    <>
+          <div className="Homecontainer">
+ <aside className="sidenav">
+          <div className="sidenav__brand">
+            <div className="avatar">{fullName ? fullName[0] : "G"}</div>
+            <div className="brand__text">
+              <div className="brand__name">{fullName || "Guest"}</div>
+              <div className="brand__role">{isAuthed ? "USER" : "GUEST"}</div>
+            </div>
+          </div>
+          <nav className="sidenav__nav">
+            {navItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={
+                  "sidenav__link" + (pathname === item.to ? " active" : "")
+                }
+              >
+                <span className="sidenav__icon" aria-hidden>
+                  {item.icon}
+                </span>
+                <span>{item.label}</span>
+              </Link>
+            ))}
+            <div className="sidenav__spacer" />
+            {!isAuthed ? (
+              <div className="sidenav__auth">
+                <Link to="/login" className="sidenav__link">
+                  Đăng nhập
+                </Link>
+                <Link to="/register" className="sidenav__link">
+                  Đăng ký
+                </Link>
+              </div>
+            ) : (
+              <button className="sidenav__logout" onClick={logout}>
+                Đăng xuất
+              </button>
+            )}
+          </nav>
+        </aside>
+    <div className="col-md-10 staffcontainer">
       <div className="bg-white border-bottom p-3 mb-3">
         <div className="row align-items-center">
           <div className="col-auto" onClick={ClickAddStaff}>
@@ -253,6 +303,8 @@ function Staff() {
         </div>
       </form>
     </div>
+    </div>
+    </>
   );
 }
 

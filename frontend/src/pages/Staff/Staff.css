@@ -1,4 +1,21 @@
-    .nav-link {
+   
+   .Homecontainer {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidenav {
+  width: 260px;         /* Sidebar cố định */
+  flex-shrink: 0;
+}
+
+.staffcontainer {
+  flex-grow: 1;         /* Chiếm toàn bộ phần còn lại */
+  padding: 20px;
+  overflow-x: auto;     /* Ngăn tràn ngang */
+}
+   
+   .nav-link {
         border-left: 3px solid transparent;
     }
 

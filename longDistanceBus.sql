@@ -561,6 +561,129 @@ VALUES
     (104, 3, NULL, NULL, 5, 'Dịch vụ tuyệt vời', 'Nhân viên hỗ trợ hết mình, wifi ổn định, nước uống miễn phí.', 'PUBLISHED', NOW() - INTERVAL 7 DAY, NOW() - INTERVAL 6 DAY),
     (105, 4, NULL, NULL, 2, 'Không hài lòng với vệ sinh', 'Sàn xe hơi bẩn, mong lần sau được cải thiện.', 'HIDDEN', NOW() - INTERVAL 10 DAY, NOW() - INTERVAL 3 DAY);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments` (New Payment Service)
+--
+
+CREATE TABLE `payments` (
+  `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+  `payment_code` VARCHAR(20) UNIQUE NOT NULL,
+  `user_id` BIGINT NOT NULL,
+  `employee_id` VARCHAR(10),
+  `total_amount` DECIMAL(12,2) NOT NULL,
+  `discount_amount` DECIMAL(12,2) DEFAULT 0,
+  `final_amount` DECIMAL(12,2) NOT NULL,
+  `payment_method` VARCHAR(20) NOT NULL,
+  `status` VARCHAR(20) NOT NULL DEFAULT 'PENDING',
+  `paid_at` DATETIME,
+  `expires_at` DATETIME NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `notes` TEXT,
+  INDEX `idx_user_id` (`user_id`),
+  INDEX `idx_status` (`status`),
+  INDEX `idx_payment_code` (`payment_code`),
+  INDEX `idx_expires_at` (`expires_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_details` (New Payment Service)
+--
+
+CREATE TABLE `payment_details` (
+  `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+  `payment_id` BIGINT NOT NULL,
+  `trip_id` BIGINT NOT NULL,
+  `seat_id` BIGINT NOT NULL,
+  `seat_code` VARCHAR(10) NOT NULL,
+  `unit_price` DECIMAL(10,2) NOT NULL,
+  `quantity` INT DEFAULT 1,
+  `subtotal` DECIMAL(12,2) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`payment_id`) REFERENCES `payments`(`id`) ON DELETE CASCADE,
+  INDEX `idx_payment_id` (`payment_id`),
+  INDEX `idx_trip_id` (`trip_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_transactions` (New Payment Service)
+--
+
+CREATE TABLE `payment_transactions` (
+  `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+  `payment_id` BIGINT NOT NULL,
+  `transaction_code` VARCHAR(50) UNIQUE,
+  `gateway` VARCHAR(20) NOT NULL,
+  `request_data` JSON,
+  `response_data` JSON,
+  `status` VARCHAR(20) NOT NULL,
+  `amount` DECIMAL(12,2) NOT NULL,
+  `callback_url` VARCHAR(500),
+  `return_url` VARCHAR(500),
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (`payment_id`) REFERENCES `payments`(`id`) ON DELETE CASCADE,
+  INDEX `idx_payment_id` (`payment_id`),
+  INDEX `idx_transaction_code` (`transaction_code`),
+  INDEX `idx_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Sample data for table `payments`
+--
+
+INSERT INTO `payments` 
+    (`payment_code`, `user_id`, `employee_id`, `total_amount`, `discount_amount`, `final_amount`, `payment_method`, `status`, `paid_at`, `expires_at`, `created_at`, `updated_at`, `notes`)
+VALUES
+    ('PAY-20241225-0001', 101, NULL, 300000.00, 0.00, 300000.00, 'VNPAY', 'COMPLETED', '2024-12-25 10:15:00', '2024-12-25 10:30:00', '2024-12-25 10:00:00', '2024-12-25 10:15:00', 'Thanh toán thành công qua VNPay'),
+    ('PAY-20241225-0002', 102, 'EMP001', 450000.00, 50000.00, 400000.00, 'CASH', 'COMPLETED', '2024-12-25 11:20:00', '2024-12-25 11:35:00', '2024-12-25 11:05:00', '2024-12-25 11:20:00', 'Thanh toán tiền mặt tại quầy, áp dụng mã giảm giá'),
+    ('PAY-20241225-0003', 103, NULL, 600000.00, 0.00, 600000.00, 'VNPAY', 'PENDING', NULL, '2024-12-25 15:30:00', '2024-12-25 15:15:00', '2024-12-25 15:15:00', 'Đang chờ thanh toán'),
+    ('PAY-20241224-0001', 104, NULL, 250000.00, 0.00, 250000.00, 'VNPAY', 'COMPLETED', '2024-12-24 14:30:00', '2024-12-24 14:45:00', '2024-12-24 14:15:00', '2024-12-24 14:30:00', NULL),
+    ('PAY-20241224-0002', 105, 'EMP002', 350000.00, 0.00, 350000.00, 'CASH', 'COMPLETED', '2024-12-24 16:45:00', '2024-12-24 17:00:00', '2024-12-24 16:30:00', '2024-12-24 16:45:00', 'Thanh toán tiền mặt'),
+    ('PAY-20241223-0001', 101, NULL, 500000.00, 0.00, 500000.00, 'VNPAY', 'FAILED', NULL, '2024-12-23 10:30:00', '2024-12-23 10:15:00', '2024-12-23 10:30:00', 'Thanh toán thất bại - hết hạn'),
+    ('PAY-20241223-0002', 102, NULL, 400000.00, 0.00, 400000.00, 'VNPAY', 'CANCELLED', NULL, '2024-12-23 11:30:00', '2024-12-23 11:15:00', '2024-12-23 11:30:00', 'Khách hàng hủy thanh toán');
+
+--
+-- Sample data for table `payment_details`
+--
+
+INSERT INTO `payment_details`
+    (`payment_id`, `trip_id`, `seat_id`, `seat_code`, `unit_price`, `quantity`, `subtotal`, `created_at`)
+VALUES
+    (1, 1, 1, 'A1', 300000.00, 1, 300000.00, '2024-12-25 10:00:00'),
+    (2, 1, 2, 'A2', 150000.00, 1, 150000.00, '2024-12-25 11:05:00'),
+    (2, 1, 3, 'A3', 150000.00, 1, 150000.00, '2024-12-25 11:05:00'),
+    (2, 1, 4, 'A4', 150000.00, 1, 150000.00, '2024-12-25 11:05:00'),
+    (3, 2, 5, 'B1', 200000.00, 1, 200000.00, '2024-12-25 15:15:00'),
+    (3, 2, 6, 'B2', 200000.00, 1, 200000.00, '2024-12-25 15:15:00'),
+    (3, 2, 7, 'B3', 200000.00, 1, 200000.00, '2024-12-25 15:15:00'),
+    (4, 3, 8, 'C1', 250000.00, 1, 250000.00, '2024-12-24 14:15:00'),
+    (5, 3, 9, 'C2', 175000.00, 1, 175000.00, '2024-12-24 16:30:00'),
+    (5, 3, 10, 'C3', 175000.00, 1, 175000.00, '2024-12-24 16:30:00'),
+    (6, 4, 11, 'D1', 250000.00, 1, 250000.00, '2024-12-23 10:15:00'),
+    (6, 4, 12, 'D2', 250000.00, 1, 250000.00, '2024-12-23 10:15:00'),
+    (7, 4, 13, 'D3', 200000.00, 1, 200000.00, '2024-12-23 11:15:00'),
+    (7, 4, 14, 'D4', 200000.00, 1, 200000.00, '2024-12-23 11:15:00');
+
+--
+-- Sample data for table `payment_transactions`
+--
+
+INSERT INTO `payment_transactions`
+    (`payment_id`, `transaction_code`, `gateway`, `request_data`, `response_data`, `status`, `amount`, `callback_url`, `return_url`, `created_at`, `updated_at`)
+VALUES
+    (1, '1234567890123456789', 'VNPAY', '{"vnp_Amount":"30000000","vnp_Command":"pay","vnp_CreateDate":"20241225100000","vnp_CurrCode":"VND","vnp_IpAddr":"127.0.0.1","vnp_Locale":"vn","vnp_OrderInfo":"Thanh toan don hang: PAY-20241225-0001","vnp_OrderType":"other","vnp_ReturnUrl":"http://localhost:3000/payment/callback","vnp_TmnCode":"YOUR_TMN_CODE","vnp_TxnRef":"1234567890123456789","vnp_Version":"2.1.0"}', '{"vnp_Amount":"30000000","vnp_BankCode":"NCB","vnp_CardType":"ATM","vnp_OrderInfo":"Thanh toan don hang: PAY-20241225-0001","vnp_PayDate":"20241225101500","vnp_ResponseCode":"00","vnp_TmnCode":"YOUR_TMN_CODE","vnp_TransactionNo":"12345678","vnp_TransactionStatus":"00","vnp_TxnRef":"1234567890123456789"}', 'SUCCESS', 300000.00, 'http://localhost:8085/api/payments/callback/vnpay', 'http://localhost:3000/payment/callback', '2024-12-25 10:00:00', '2024-12-25 10:15:00'),
+    (3, '9876543210987654321', 'VNPAY', '{"vnp_Amount":"60000000","vnp_Command":"pay","vnp_CreateDate":"20241225151500","vnp_CurrCode":"VND","vnp_IpAddr":"127.0.0.1","vnp_Locale":"vn","vnp_OrderInfo":"Thanh toan don hang: PAY-20241225-0003","vnp_OrderType":"other","vnp_ReturnUrl":"http://localhost:3000/payment/callback","vnp_TmnCode":"YOUR_TMN_CODE","vnp_TxnRef":"9876543210987654321","vnp_Version":"2.1.0"}', NULL, 'PENDING', 600000.00, 'http://localhost:8085/api/payments/callback/vnpay', 'http://localhost:3000/payment/callback', '2024-12-25 15:15:00', '2024-12-25 15:15:00'),
+    (4, '1111111111111111111', 'VNPAY', '{"vnp_Amount":"25000000","vnp_Command":"pay","vnp_CreateDate":"20241224141500","vnp_CurrCode":"VND","vnp_IpAddr":"127.0.0.1","vnp_Locale":"vn","vnp_OrderInfo":"Thanh toan don hang: PAY-20241224-0001","vnp_OrderType":"other","vnp_ReturnUrl":"http://localhost:3000/payment/callback","vnp_TmnCode":"YOUR_TMN_CODE","vnp_TxnRef":"1111111111111111111","vnp_Version":"2.1.0"}', '{"vnp_Amount":"25000000","vnp_BankCode":"VTC","vnp_CardType":"ATM","vnp_OrderInfo":"Thanh toan don hang: PAY-20241224-0001","vnp_PayDate":"20241224143000","vnp_ResponseCode":"00","vnp_TmnCode":"YOUR_TMN_CODE","vnp_TransactionNo":"11111111","vnp_TransactionStatus":"00","vnp_TxnRef":"1111111111111111111"}', 'SUCCESS', 250000.00, 'http://localhost:8085/api/payments/callback/vnpay', 'http://localhost:3000/payment/callback', '2024-12-24 14:15:00', '2024-12-24 14:30:00'),
+    (6, '2222222222222222222', 'VNPAY', '{"vnp_Amount":"50000000","vnp_Command":"pay","vnp_CreateDate":"20241223101500","vnp_CurrCode":"VND","vnp_IpAddr":"127.0.0.1","vnp_Locale":"vn","vnp_OrderInfo":"Thanh toan don hang: PAY-20241223-0001","vnp_OrderType":"other","vnp_ReturnUrl":"http://localhost:3000/payment/callback","vnp_TmnCode":"YOUR_TMN_CODE","vnp_TxnRef":"2222222222222222222","vnp_Version":"2.1.0"}', '{"vnp_Amount":"50000000","vnp_ResponseCode":"07","vnp_TmnCode":"YOUR_TMN_CODE","vnp_TxnRef":"2222222222222222222"}', 'FAILED', 500000.00, 'http://localhost:8085/api/payments/callback/vnpay', 'http://localhost:3000/payment/callback', '2024-12-23 10:15:00', '2024-12-23 10:30:00'),
+    (7, '3333333333333333333', 'VNPAY', '{"vnp_Amount":"40000000","vnp_Command":"pay","vnp_CreateDate":"20241223111500","vnp_CurrCode":"VND","vnp_IpAddr":"127.0.0.1","vnp_Locale":"vn","vnp_OrderInfo":"Thanh toan don hang: PAY-20241223-0002","vnp_OrderType":"other","vnp_ReturnUrl":"http://localhost:3000/payment/callback","vnp_TmnCode":"YOUR_TMN_CODE","vnp_TxnRef":"3333333333333333333","vnp_Version":"2.1.0"}', NULL, 'INIT', 400000.00, 'http://localhost:8085/api/payments/callback/vnpay', 'http://localhost:3000/payment/callback', '2024-12-23 11:15:00', '2024-12-23 11:30:00');
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

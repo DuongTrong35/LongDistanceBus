@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import logoweb from "../../assets/konoha.png";
 import "./FindRide.css";
 
 function FindRide() {
@@ -11,6 +12,25 @@ function FindRide() {
   const [soldSeats, setSoldSeats] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [dsroute, setdsroute] = useState([]);
+
+  //
+  useEffect(() => {
+    const fetchallroute = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("http://localhost:8086/api/allroute");
+        setdsroute(response.data);
+      } catch (err) {
+        console.error(err);
+        setError("Không thể tải dữ liệu nhân viên!");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchallroute();
+  }, []);
 
   //  Gọi API lấy ghế theo busId
   useEffect(() => {
@@ -49,7 +69,7 @@ function FindRide() {
 
   // Hàm chọn ghế
   const handleSelect = (seatCode) => {
-    console.log("Sold seats (immediately after setState):", soldSeats); // chưa chắc đúng
+    // console.log("Sold seats (immediately after setState):", soldSeats); // chưa chắc đúng
 
     if (soldSeats.includes(seatCode)) return;
     if (selectedSeats.includes(seatCode)) {
@@ -64,9 +84,11 @@ function FindRide() {
     seats.map((seat) => {
       // const seatCode = seat.maghe || seat.soGhe || seat.id;
       const seatCode = seat.id;
-      console.log("Test:", seatCode);
+      // console.log("Test:", seatCode);
       const isSold = soldSeats.includes(seatCode);
-      console.log("Kết quả:", isSold);
+      // console.log("Kết quả:", isSold);
+      // console.log("Sold seats (immediately after setState):", dsroute); // chưa chắc đúng
+
       const isSelected = selectedSeats.includes(seatCode);
       return (
         <div
@@ -113,11 +135,25 @@ function FindRide() {
   // Hiển thị
 
   const [showList, setShowList] = useState(false);
+  const [showListBack, setShowListBack] = useState(false);
 
   const [SelectedValueected, setSelectedValue] = useState(null);
+  const [SelectedValueectedBack, setSelectedValueectedBack] = useState(null);
+
   const givearrive = (e) => {
     const firstSpan = e.currentTarget.querySelector(
       ".HomeLeftCustomerCenterTimeItemCenter span:first-child"
+    );
+    if (!firstSpan) return;
+    const fullText = firstSpan.textContent.trim();
+    const value = fullText.split(" - ").slice(1).join(" - ");
+    console.log("Test:", value);
+    setSelectedValue(value);
+    setShowList(false);
+  };
+  const giveback = (e) => {
+    const firstSpan = e.currentTarget.querySelector(
+      ".HomeLeftCustomerCenterTimeItemCenter1 span:first-child"
     );
 
     if (!firstSpan) return;
@@ -125,15 +161,47 @@ function FindRide() {
     const fullText = firstSpan.textContent.trim();
     const value = fullText.split(" - ").slice(1).join(" - ");
     console.log("Test:", value);
-
-    setSelectedValue(value);
-    setShowList(false);
+    setSelectedValueectedBack(value);
+    setShowListBack(false);
   };
-
   return (
     <div className="HomeContainer">
-      <div className="HomeBanner"> Chọn ghế xe {id}</div>
+      {/* <div className="HomeBanner"> Chọn ghế xe {id}</div> */}
+      <div className="header-wrapper">
+        <div className="header-inner">
+          {/* LEFT */}
+          <div className="header-left">
+            <div className="lang">
+              <span className="flag">🇻🇳</span>
+              <span className="text">VI</span>
+              <span className="arrow">▼</span>
+            </div>
 
+            <div className="app-download">
+              <span className="icon">●</span>
+              <span className="text">Tải ứng dụng</span>
+              <span className="arrow">▼</span>
+            </div>
+          </div>
+
+          {/* CENTER */}
+          <div className="header-center">
+            <img src={logoweb} alt="futa-logo" className="futa-logo" />
+            <h2 className="route">Buôn Ma Thuột – TP. Hồ Chí Minh</h2>
+            <p className="date">Thứ 4, 26/11</p>
+          </div>
+
+          {/* RIGHT */}
+          <div className="header-right">
+            <div className="profile">
+              <span className="avatar">🧑</span>
+              <span className="name">Dương Trọng Tân</span>
+              <span className="arrow">▼</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* --------------------------------------------- */}
       <div className="HomeCenter">
         <div className="HomeLeft">
           {loading ? (
@@ -321,51 +389,121 @@ function FindRide() {
             </div>
 
             <div className="HomeLeftCustomerCenterTimeCenter">
-               {showList && (
-                      <div className="HomeLeftCustomerCenterTimeCover">
-                        <div className="search-wrapper">
-                          <span className="search-icon">🔍</span>
-                          <input
-                            type="text"
-                            className="search-input"
-                            placeholder="Nhập tên bến xe, văn phòng"
-                          />
-                        </div>
-                        <div
-                          className="HomeLeftCustomerCenterTimeItem"
-                          onClick={(e) => givearrive(e)}
-                        >
-                          <div className="HomeLeftCustomerCenterTimeItemLeft">
-                            <input type="radio" name="pickup" value="benxe" />
+              {showList && (
+                <div className="HomeLeftCustomerCenterTimeCover">
+                  <div className="search-wrapper">
+                    <span className="search-icon">🔍</span>
+                    <input
+                      type="text"
+                      className="search-input"
+                      placeholder="Nhập tên bến xe, văn phòng"
+                    />
+                  </div>
+                  {/* ----------------------- */}
+                  {dsroute.length > 0 ? (
+                    dsroute
+                      .filter((ar) => ar.tinhtrang === 0)
+                      .map((ar, index) => (
+                        <React.Fragment key={index}>
+                          <div
+                            className="HomeLeftCustomerCenterTimeItem"
+                            onClick={(e) => givearrive(e)}
+                          >
+                            <div className="HomeLeftCustomerCenterTimeItemLeft">
+                              <input type="radio" name="pickup" value="benxe" />
+                            </div>
+                            <div className="HomeLeftCustomerCenterTimeItemCenter">
+                              <span>
+                                {ar.gio} - {ar.ten}
+                              </span>
+                              <span>{ar.mota}</span>
+                            </div>
+                            <a
+                              href={ar.link}
+                              className="link-xemvitri"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Xem vị trí
+                            </a>
                           </div>
-                          <div className="HomeLeftCustomerCenterTimeItemCenter">
-                            <span>13:00 - Phước Long - Bạc Liêu</span>
-                            <span>Phước Long - Bạc Liêu</span>
+                          <div className="custom-divider"></div>
+                        </React.Fragment>
+                      ))
+                  ) : (
+                    <div className="text-center">
+                      Không có dữ liệu nhân viên
+                    </div>
+                  )}
+                </div>
+              )}
+              {showListBack && (
+                <div className="HomeLeftCustomerCenterTimeCover1">
+                  <div className="search-wrapper">
+                    <span className="search-icon">🔍</span>
+                    <input
+                      type="text"
+                      className="search-input"
+                      placeholder="Nhập tên bến xe, văn phòng"
+                    />
+                  </div>
+                  {/* ----------------------- */}
+                  {dsroute.length > 0 ? (
+                    dsroute
+                      .filter((ar) => ar.tinhtrang === 1)
+                      .map((ar, index) => (
+                        <React.Fragment key={index}>
+                          <div
+                            className="HomeLeftCustomerCenterTimeItem1"
+                            onClick={(e) => giveback(e)}
+                          >
+                            <div className="HomeLeftCustomerCenterTimeItemLeft1">
+                              <input type="radio" name="pickup" value="benxe" />
+                            </div>
+                            <div className="HomeLeftCustomerCenterTimeItemCenter1">
+                              <span>
+                                {ar.gio} - {ar.ten}
+                              </span>
+                              <span>{ar.mota}</span>
+                            </div>
+                            <a
+                              href={ar.link}
+                              className="link-xemvitri1"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Xem vị trí
+                            </a>
                           </div>
-                          <a href="#" className="link-xemvitri">
-                            Xem vị trí
-                          </a>
-                        </div>
-                        <div className="custom-divider"></div>
-                      </div>
-                    )}
+                          <div className="custom-divider"></div>
+                        </React.Fragment>
+                      ))
+                  ) : (
+                    <div className="text-center">
+                      Không có dữ liệu nhân viên
+                    </div>
+                  )}
+                </div>
+              )}
               <div className="HomeLeftCustomerCenterTimeCenterFrom">
                 <p>ĐIỂM ĐÓN</p>
                 <div className="HomeLeftCustomerCenterTimeCenterFromvp">
                   <div className="HomeLeftCustomerCenterTimeCenterFromvpchose">
-                    <input type="radio" name="pickup" value="benxe" />
+                    {/* <input type="radio" name="pickup" value="benxe" /> */}
                     <span className="label-text active">Bến xe/VP</span>
                     <div className="input-arrow-wrapper">
                       <input
                         type="text"
                         placeholder="Đồng Đen"
                         className="input-with-arrow"
-                        onClick={() => setShowList((prev) => !prev)}
+                        onClick={() => {
+                          setShowList((prev) => !prev);
+                          setShowListBack(false);
+                        }}
                         value={SelectedValueected ?? ""}
                         readOnly
                       />
                     </div>
-                   
                   </div>
                 </div>
                 <div style={{ marginTop: "18px" }}>
@@ -398,15 +536,18 @@ function FindRide() {
                 <p>ĐIỂM TRẢ</p>
                 <div className="HomeLeftCustomerCenterTimeCenterFromvp">
                   <div className="HomeLeftCustomerCenterTimeCenterFromvpchose">
-                    <input type="radio" name="pickup" value="benxe" />
+                    {/* <input type="radio" name="pickup" value="benxe" /> */}
                     <span className="label-text active">Bến xe/VP</span>
                     <div className="input-arrow-wrapper">
                       <input
                         type="text"
                         placeholder="Đồng Đen"
                         className="input-with-arrow"
-                        onClick={() => setShowList((prev) => !prev)}
-                        value={SelectedValueected ?? ""}
+                        onClick={() => {
+                          setShowListBack((prev) => !prev);
+                          setShowList(false);
+                        }}
+                        value={SelectedValueectedBack ?? ""}
                         readOnly
                       />
                     </div>
@@ -449,7 +590,10 @@ function FindRide() {
                 FUTAPAY
               </div>
 
-              <div className="text-2xl font-medium text-black">0đ</div>
+              <div className="text-2xl font-medium text-black">
+                {" "}
+                {pricetmp * selectedSeats.length} đồng
+              </div>
             </div>
 
             <div className="flex flex-auto items-center justify-end">
@@ -478,7 +622,7 @@ function FindRide() {
                 Tuyến xe:
               </span>
               <span className="text-right text-black">
-                BX An Nhon - BX Mien Tay
+                BX {SelectedValueected} tới BX {SelectedValueectedBack}
               </span>
             </div>
 
@@ -489,7 +633,7 @@ function FindRide() {
               >
                 Thời gian xuất bến:
               </span>
-              <span className="text-right text-black">20:01 20/11/2025</span>
+              <span className="text-right text-black">23:40 19/11/2025</span>
             </div>
 
             <div className="mt-2 flex justify-between">
@@ -536,9 +680,9 @@ function FindRide() {
           </div>
 
           <div className="HomeRightDeparturePrice">
-            <div class="price-detail">
-              <span class="title">Chi tiết giá</span>
-              <span class="icon">i</span>
+            <div className="price-detail">
+              <span className="title">Chi tiết giá</span>
+              <span className="icon">i</span>
             </div>
             <div className="mt-2 flex justify-between">
               <span
@@ -562,7 +706,7 @@ function FindRide() {
               <span className="text-right text-black">0đ</span>
             </div>
 
-            <div class="customerline"></div>
+            <div className="customerline"></div>
 
             <div className="mt-2 flex justify-between">
               <span
@@ -579,6 +723,52 @@ function FindRide() {
           </div>
         </div>
       </div>
+<footer 
+  className="w3l-footer-29-main" 
+  style={{ background: '#FFEEEB' }}
+>  <div className="footer-29 pt-5 pb-4">
+    <div className="container pt-md-4">
+      <div className="row footer-top-29">
+
+        {/* Cột 1 */}
+        <div className="col-lg-4 col-md-6 footer-list-29">
+          <h6 className="footer-title-29">Thông tin liên lạc</h6>
+          <p className="mb-2 pe-xl-5">Địa chỉ: 130 Cô Bắc Q1 TPHCM</p>
+          <p className="mb-2">Số điện thoại : (028)45.735.921</p>
+          <p className="mb-2">Email : KonohaMarket@gmail.com</p>
+        </div>
+
+        {/* Cột 2 */}
+        <div className="col-lg-4 col-md-6 col-sm-8 footer-list-29 mt-lg-0 mt-4 ps-lg-5">
+          <h6 className="footer-title-29">Lời nhắn</h6>
+          <p className="mt-3">
+            Nếu cửa hàng chúng tôi làm gì sai thì mong quý khách thông cảm
+          </p>
+        </div>
+
+        {/* Cột 3 (ảnh) */}
+        <div
+          className="col-lg-2 col-md-3 col-6 ps-lg-5 ps-lg-4 footer-list-29 mt-md-0 mt-4"
+          style={{ display: "flex", marginLeft: "80px" }}
+        >
+          <img
+            src=""
+            alt=""
+            style={{ width: "200px", height: "150px" }}
+          />
+
+          <img
+            src=""
+            alt=""
+            style={{ width: "95px", height: "79px", marginTop: "-28px" }}
+          />
+        </div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+
     </div>
   );
 }

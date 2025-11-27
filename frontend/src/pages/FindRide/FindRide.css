@@ -13,17 +13,17 @@
 
 }
 .HomeContainer .HomeCenter{
-    height: 1400px;
+    height: 1500px;
     background: burlywood;
     width: 100%;
     display: flex;
 }
 .HomeContainer .HomeCenter .HomeLeft{
-    background: yellow;
+    background: #F4F4F4;
     width: 70%;
 }
 .HomeContainer .HomeCenter  .HomeRight{
-    background: yellowgreen;
+    background: #F4F4F4;
     width: 30%;
 }
 
@@ -353,6 +353,52 @@ margin-right: 70px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); /* bóng mờ nhẹ */
   margin: 10px 0;
 }
+/* ----------------------------------------------- Phải*/
+.HomeLeftCustomerCenterTimeCover1{
+    width: 425px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    /* padding: 20px; */
+    background: #fff;
+    max-width: 750px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-left: 342px;
+    height: 300px;
+    /* margin-top: 16px; */
+    margin-top: 130px;
+    /* position: relative; */
+    position: absolute;
+    z-index: 9999;
+}
+.HomeLeftCustomerCenterTimeItem1{
+  display: flex;
+  margin-top: 12px;
+      padding-left: 15px;
+
+}
+.HomeLeftCustomerCenterTimeItem1 .HomeLeftCustomerCenterTimeItemLeft1{
+  margin-top: 14px;
+    height: 20px;
+}
+.HomeLeftCustomerCenterTimeItem1 .HomeLeftCustomerCenterTimeItemCenter1{
+margin-left: 8px;
+margin-right: 70px;
+}
+.HomeLeftCustomerCenterTimeItem1 .HomeLeftCustomerCenterTimeItemCenter1 span{
+  display: block;
+}
+.HomeLeftCustomerCenterTimeItem1 .link-xemvitri1 {
+  color: #f34c1e;         /* màu cam */
+  font-size: 18px;        /* giống hình */
+  text-decoration: none;  /* bỏ gạch chân */
+  cursor: pointer;
+  font-weight: 400;       /* độ đậm nhẹ */
+}
+
+.HomeLeftCustomerCenterTimeItem1 .link-xemvitri1:hover {
+  text-decoration: underline; /* hover có thể gạch chân */
+}
+
 /* ---------------------------------------------------------------------------- */
 .HomeLeftCustomerCenterBottom {
   width: 750px;
@@ -380,7 +426,7 @@ margin-right: 70px;
     max-width: 750px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     margin-left: 30px;
-    height: 220px;
+    height: 235px;
     margin-top: 30px;
 }
 .HomeRightDeparturePrice{
@@ -428,3 +474,77 @@ margin-right: 70px;
 
   margin: 10px 0;
 }
+/* ---------------------------------------------------------- */
+.header-wrapper {
+width: 100%;
+background: linear-gradient(135deg, #ff7a00, #ff4b00);
+padding: 12px 0;
+display: flex;
+justify-content: center;
+color: white;
+}
+
+
+.header-inner {
+width: 95%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+
+.header-left, .header-right {
+display: flex;
+gap: 20px;
+align-items: center;
+}
+
+
+.lang, .app-download, .profile {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 15px;
+cursor: pointer;
+}
+
+
+.header-center {
+text-align: center;
+max-width: 450px;
+}
+
+
+.futa-logo {
+height: 55px;
+margin-bottom: 5px;
+}
+
+
+.route {
+font-size: 24px;
+margin: 0;
+font-weight: bold;
+}
+
+
+.date {
+margin: 0;
+font-size: 16px;
+opacity: 0.9;
+}
+
+
+.avatar {
+font-size: 22px;
+}
+.blockquote-footer {
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875em;
+    color: #6c757d;
+}
+
+    .blockquote-footer::before {
+        content: "— ";
+    }

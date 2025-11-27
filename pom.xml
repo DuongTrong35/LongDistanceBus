@@ -39,8 +39,11 @@
         <module>services/user-service</module>
         <module>services/staff-service</module>
         <module>services/seat-service</module>
+        <module>services/allroute-service</module>
+        <module>services/schedule-service</module>
         <module>services/operator-service</module>
         <module>services/review-service</module>
+        <module>services/payment-service</module>
     </modules>
 
     <build>

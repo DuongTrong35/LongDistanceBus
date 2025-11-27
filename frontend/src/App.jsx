@@ -8,6 +8,7 @@ import Register from "./pages/Auth/Register";
 import Forgot from "./pages/Auth/Forgot";
 import Trips from "./pages/Trips/Trips";
 import TripDetail from "./pages/Trips/TripDetail";
+import News from "./pages/News/News";
 import RequireAuth from "./context/RequireAuth";
 import AppShell from "./components/AppShell";
 import Staff from "./pages/Staff/Staff";

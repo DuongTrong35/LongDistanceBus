@@ -1,13 +1,21 @@
 import "./AddStaff.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation,Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
+import axios from "axios";
+const navItems = [
+  { to: "/", label: "Trang chủ", icon: "🏠" },
+  { to: "/trips", label: "Tìm chuyến", icon: "🚌" },
+  { to: "/employee", label: "Nhân viên", icon: "👨‍💻" },
+  { to: "/operators", label: "Nhà xe", icon: "🚐" },
+];
 function UpdateStaff() {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = location.state || {}; 
-
+  const { isAuthed, fullName, logout } = useAuth();
+  const { pathname } = useLocation();
   const [formData, setFormData] = useState({
     maNV: "",
     hoNV: "",
@@ -90,7 +98,48 @@ function UpdateStaff() {
   };
 
   return (
-    <div className="container-fluid p-4">
+    <div className="Homecontainer">
+         <aside className="sidenav">
+                  <div className="sidenav__brand">
+                    <div className="avatar">{fullName ? fullName[0] : "G"}</div>
+                    <div className="brand__text">
+                      <div className="brand__name">{fullName || "Guest"}</div>
+                      <div className="brand__role">{isAuthed ? "USER" : "GUEST"}</div>
+                    </div>
+                  </div>
+                  <nav className="sidenav__nav">
+                    {navItems.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        className={
+                          "sidenav__link" + (pathname === item.to ? " active" : "")
+                        }
+                      >
+                        <span className="sidenav__icon" aria-hidden>
+                          {item.icon}
+                        </span>
+                        <span>{item.label}</span>
+                      </Link>
+                    ))}
+                    <div className="sidenav__spacer" />
+                    {!isAuthed ? (
+                      <div className="sidenav__auth">
+                        <Link to="/login" className="sidenav__link">
+                          Đăng nhập
+                        </Link>
+                        <Link to="/register" className="sidenav__link">
+                          Đăng ký
+                        </Link>
+                      </div>
+                    ) : (
+                      <button className="sidenav__logout" onClick={logout}>
+                        Đăng xuất
+                      </button>
+                    )}
+                  </nav>
+                </aside>
+    <div className="container-fluid p-4 updastaff">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>Cập nhật thành viên</h2>
         <button className="btn btn-primary" type="button" onClick={handleReset}>
@@ -229,6 +278,7 @@ function UpdateStaff() {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 }

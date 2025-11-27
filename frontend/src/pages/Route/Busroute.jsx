@@ -85,7 +85,46 @@ function Busroute() {
           </div>
         </div>
       </header>
+<main className="ld-main">
+        <section className="ld-hero">
+          <div className="ld-hero-banner">
+            <div className="ld-hero-left">
+              <div className="ld-hero-eyebrow">Long Distance Bus Lines</div>
+              <h1 className="ld-hero-title">
+                Vững tin trên mọi chặng đường dài
+              </h1>
+              <p className="ld-hero-sub">
+                Mạng lưới xe khách liên tỉnh, trung chuyển tận nơi và dịch vụ
+                chăm sóc khách hàng tận tâm, giúp hành trình của bạn luôn an
+                toàn và thoải mái.
+              </p>
+              <div className="ld-hero-pill">
+                <span className="ld-hero-pill-number">24</span>
+                <span className="ld-hero-pill-text">
+                  Tuyến xe hoạt động mỗi ngày
+                </span>
+              </div>
+            </div>
 
+            <div className="ld-hero-right">
+              <div className="ld-hero-city" />
+              <div className="ld-hero-bus-shadow" />
+              <div className="ld-hero-bus">
+                <div className="ld-hero-bus-top">
+                  <div className="ld-hero-bus-window-row">
+                    <div className="ld-hero-bus-window" />
+                    <div className="ld-hero-bus-window" />
+                    <div className="ld-hero-bus-window" />
+                  </div>
+                </div>
+                <div className="ld-hero-bus-door" />
+                <div className="ld-hero-bus-wheel ld-hero-bus-wheel--front" />
+                <div className="ld-hero-bus-wheel ld-hero-bus-wheel--back" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
       <div className="page">
         <div className="container">
           {/* Search Bar */}

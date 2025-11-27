@@ -30,7 +30,10 @@ const id = state?.id;  // lấy busid
 
     fetchTrip();
   }, [id]);
-
+// const [diadiem, setdiadiem] = useState({
+//   diemden: "",
+//   diemdi: "",
+// });
   return (
     <>
       <header className="ld-header">
@@ -123,7 +126,7 @@ const id = state?.id;  // lấy busid
                 <div className="card-row">
                   <div>
                     <div className="subtext">{trip.giokhoihang}</div>
-                    <div className="time">{trip.diemdi}</div>
+                    <div className="time" >{trip.diemdi} </div>
                   </div>
 
                   <div className="center-info">

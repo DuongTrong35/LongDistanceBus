@@ -16,6 +16,14 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: schedule-service
+          uri: http://localhost:8087
+          predicates:
+            - Path=/api/schedule/**
+        - id: allroute-service
+          uri: http://localhost:8086
+          predicates:
+            - Path=/api/allroute/**
         - id: seat-service
           uri: http://localhost:8084
           predicates:

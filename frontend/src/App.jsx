@@ -8,7 +8,6 @@ import Register from "./pages/Auth/Register";
 import Forgot from "./pages/Auth/Forgot";
 import Trips from "./pages/Trips/Trips";
 import TripDetail from "./pages/Trips/TripDetail";
-import News from "./pages/News/News";
 import RequireAuth from "./context/RequireAuth";
 import AppShell from "./components/AppShell";
 import Staff from "./pages/Staff/Staff";
@@ -37,7 +36,6 @@ export default function App() {
 				<Route path="/register" element={<Register />} />
 				<Route path="/forgot" element={<Forgot />} />
 				<Route path="/support" element={<Support />} />
-				<Route path="/news" element={<News />} />
 				<Route path="/employee" element={<Staff />} />
 				<Route path="/employee/addemployee" element={<AddStaff />} />
 				<Route path="/employee/updateemployee" element={<UpdateStaff />} />

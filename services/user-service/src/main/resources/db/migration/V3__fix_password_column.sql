@@ -5,5 +5,3 @@
 -- ALTER TABLE users DROP COLUMN password;
 -- 
 -- The password_hash column should already exist from V1 or V2 migration
--- Xóa trường `email` khỏi bảng users nếu có tồn tại
-ALTER TABLE users DROP COLUMN email;

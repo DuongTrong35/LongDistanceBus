@@ -1,41 +1,10 @@
 package com.longdistancebus.user.api.dto;
 
+import lombok.Data;
+
+@Data
 public class RegisterRequest {
-
-    private String fullName;
-    private String phone;
+    private String phoneNumber;  // Số điện thoại thay cho email
     private String password;
-
-    public RegisterRequest() {
-    }
-
-    public RegisterRequest(String fullName, String phone, String password) {
-        this.fullName = fullName;
-        this.phone = phone;
-        this.password = password;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private String fullName;  // Họ và tên
 }

@@ -33,12 +33,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-        <!-- Twilio SDK để gửi SMS OTP -->
-        <dependency>
-            <groupId>com.twilio.sdk</groupId>
-            <artifactId>twilio</artifactId>
-            <version>11.0.3</version> <!-- hoặc version mới nhất trên MvnRepository -->
-        </dependency>
 
         <!-- JPA & DB -->
         <dependency>
@@ -61,6 +55,16 @@
             <artifactId>flyway-mysql</artifactId>
         </dependency>
 
+        <!-- Security (password encoder, cấu hình bảo vệ endpoints) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
 
         <!-- Ký JWT (dùng ở service tạo token) -->
         <dependency>
@@ -104,18 +108,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>10.20.1</version>
-                <configuration>
-                    <url>jdbc:mysql://localhost:3306/longdistancebus_user</url>
-                    <user>root</user>
-                    <password>your_password</password>
-                </configuration>
-            </plugin>
-
         </plugins>
 
         <resources>

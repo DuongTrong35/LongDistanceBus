@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Login.css";
@@ -7,31 +7,19 @@ export default function Login() {
   const { login: loginCtx } = useAuth();
   const nav = useNavigate();
   const loc = useLocation();
-  const [phone, setPhone] = useState("");
+  const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(null);
   const [busy, setBusy] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-
-  useEffect(() => {
-    if (loc.state?.registrationSuccess) {
-      setSuccessMessage("Đăng ký thành công! Vui lòng đăng nhập.");
-      // Clear state so it doesn't persist on refresh
-      nav(loc.pathname, { replace: true, state: {} });
-    }
-  }, [loc, nav]);
 
   async function onSubmit(e) {
     e.preventDefault();
     setErr(null);
     setBusy(true);
     try {
-      await loginCtx(phone, password);
-      setSuccessMessage("Đăng nhập thành công! Đang chuyển hướng...");
+      await loginCtx(emailOrPhone, password);
       const redirect = loc.state?.from?.pathname || "/";
-      setTimeout(() => {
-        nav(redirect, { replace: true });
-      }, 1200);
+      nav(redirect, { replace: true });
     } catch (ex) {
       setErr(
         ex?.response?.data?.error ||
@@ -139,21 +127,17 @@ export default function Login() {
 
             <h2 className="auth-title">Đăng nhập tài khoản</h2>
             <p className="auth-subtitle">
-              Nhập số điện thoại và mật khẩu để tiếp tục đặt vé.
+              Nhập số điện thoại hoặc email và mật khẩu để tiếp tục đặt vé.
             </p>
-
-            {successMessage && (
-              <div className="auth-success-message">{successMessage}</div>
-            )}
 
             <form className="auth-form" onSubmit={onSubmit}>
               <div>
-                <div className="auth-label">Số điện thoại</div>
+                <div className="auth-label">Số điện thoại / Email</div>
                 <input
                   className="auth-input"
-                  placeholder="Nhập số điện thoại"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Nhập số điện thoại hoặc email"
+                  value={emailOrPhone}
+                  onChange={(e) => setEmailOrPhone(e.target.value)}
                   required
                 />
               </div>

@@ -1,6 +1,5 @@
 package com.longdistancebus.security;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -14,10 +13,11 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Cho phép tất cả các endpoint
-                        .allowedOrigins("http://localhost:5173") // React chạy ở đây
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:5173")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*");
+                        .allowedHeaders("*")
+                        .allowCredentials(true);  // ⭐ BẠN ĐANG THIẾU DÒNG NÀY
             }
         };
     }

@@ -10,8 +10,13 @@ function Busroute() {
 
   const navigate = useNavigate();
   const handleFindTrip = (id) => {
-    navigate(`/timchuyenxe/${id}`);
-  };
+      console.log("Gửi qua:", id);  // <-- kiểm tra lần 1
+
+  navigate(`/trips`, {
+    
+    state: { id },  
+  });
+};
 
   const [dscd, setdscd] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,6 +27,8 @@ function Busroute() {
         setLoading(true);
         const response = await axios.get("http://localhost:8087/api/schedule");
         setdscd(response.data);
+            console.log("AR object:", response.data);  // <-- chạy đúng 100%
+
       } catch (err) {
         console.error(err);
         setError("Không thể tải dữ liệu nhân viên!");
@@ -129,8 +136,7 @@ function Busroute() {
                           border: "none",
                           padding: "10px 20px",
                         }}
-                        onClick={() => handleFindTrip(ar.id)}
-                      >
+onClick={() => navigate("/trips", { state: { id: ar.id } })}                      >
                         Tìm chuyến xe
                       </button>
                     </div>

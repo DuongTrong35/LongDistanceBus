@@ -28,7 +28,7 @@ export default function App() {
 			<Route>
 				<Route path="/" element={<Home />} />
 				<Route path="/trips" element={<Trips />} />
-				<Route path="/trips/:id" element={<TripDetail />} />
+				{/* <Route path="/trips/:id" element={<TripDetail />} /> */}
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/forgot" element={<Forgot />} />
@@ -42,8 +42,8 @@ export default function App() {
 				<Route path="/cd" element={<Anyroute />} />
 
 				{/* Example: protect booking detail if needed */}
-				<Route path="/secure/trips" element={<RequireAuth><Trips/></RequireAuth>} />
-				<Route path="/secure/trips/:id" element={<RequireAuth><TripDetail/></RequireAuth>} />
+				{/* <Route path="/secure/trips" element={<RequireAuth><Trips/></RequireAuth>} />
+				<Route path="/secure/trips/:id" element={<RequireAuth><TripDetail/></RequireAuth>} /> */}
 			</Route>
 		</Routes>
 	);

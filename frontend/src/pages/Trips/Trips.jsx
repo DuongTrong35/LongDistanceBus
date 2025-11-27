@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams,useLocation  } from "react-router-dom";
 
 import axios from "axios";
 import "./Trips.css";
 function Trips() {
   const navigate = useNavigate();
+ const { state } = useLocation();
+const id = state?.id;  // lấy busid
+      console.log("Gửi qua:", id);  // <-- kiểm tra lần 1
+
 
   // const { id } = useParams();
-  const id = "PTHCMX1";
+  // const id = "PTHCMX1";
   const [dstrip, setdstrip] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

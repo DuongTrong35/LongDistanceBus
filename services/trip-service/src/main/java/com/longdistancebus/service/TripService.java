@@ -33,16 +33,28 @@ public class TripService {
 //
 //        return new TripResponseDTO(trip, route);
 //    }
-public List<TripResponseDTO> getTripMerged(String busid) {
-    return tripRepository.findAllByBusid(busid)
-            .stream()
-            .map(trip -> {
-                Route route = routeRepository.findById(trip.getRouteid())
-                        .orElseThrow(() -> new RuntimeException("Route not found"));
-                return new TripResponseDTO(trip, route);
-            })
-            .toList();
-}
+
+    public List<TripResponseDTO> getTripMergedByRoute(String routeid) {
+        return tripRepository.findAllByRouteid(routeid)
+                .stream()
+                .map(trip -> {
+                    Route route = routeRepository.findById(routeid)
+                            .orElseThrow(() -> new RuntimeException("Route not found"));
+                    return new TripResponseDTO(trip, route);
+                })
+                .toList();
+    }
+
+//    public List<TripResponseDTO> getTripMerged(String busid) {
+//    return tripRepository.findAllByBusid(busid)
+//            .stream()
+//            .map(trip -> {
+//                Route route = routeRepository.findById(trip.getRouteid())
+//                        .orElseThrow(() -> new RuntimeException("Route not found"));
+//                return new TripResponseDTO(trip, route);
+//            })
+//            .toList();
+//}
 
 
 

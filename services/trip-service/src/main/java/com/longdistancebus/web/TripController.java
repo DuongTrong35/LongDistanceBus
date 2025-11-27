@@ -23,7 +23,7 @@ public class TripController {
 //    }
 @GetMapping("/route/{busid}")
 public Map<String, Object> getTripMerged(@PathVariable String busid) {
-    List<TripResponseDTO> dtoList = tripService.getTripMerged(busid);
+    List<TripResponseDTO> dtoList = tripService.getTripMergedByRoute(busid);
     return Map.of("trip", dtoList);
 }
 

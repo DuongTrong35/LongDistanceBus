@@ -7,5 +7,6 @@ import java.util.List;
 public interface TripRepository  extends JpaRepository<Trip, String> {
     List<Trip> findAllByBusid(String busid);
     List<Trip> findByBusid(String busid);
+    List<Trip> findAllByRouteid(String busid);
 
 }

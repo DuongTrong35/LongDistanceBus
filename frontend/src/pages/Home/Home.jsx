@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
+import { useAuth } from "../../context/AuthContext";
 
 
 function DepartDateField({ value, onChange, min }) {
@@ -44,6 +45,7 @@ const handlelt = () => {
   const [departDate, setDepartDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [seats, setSeats] = useState(1);
+  const { isAuthed, fullName, logout } = useAuth();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -93,19 +95,37 @@ const handlelt = () => {
             <span className="ld-nav-link ld-nav-link--active">Trang chủ</span>
             <span className="ld-nav-link" onClick={handlelt}>Lịch trình</span>
             <span className="ld-nav-link">Tra cứu vé</span>
-            <span className="ld-nav-link">Tin tức</span>
+            <Link to="/news" className="ld-nav-link">
+              Tin tức
+            </Link>
             <span className="ld-nav-link">Hóa đơn</span>
             <span className="ld-nav-link">Liên hệ</span>
             <span className="ld-nav-link">Về chúng tôi</span>
           </nav>
 
           <div className="ld-header-auth">
-            <Link to="/login" className="ld-header-btn ld-header-btn--ghost">
-              Đăng nhập
-            </Link>
-            <Link to="/register" className="ld-header-btn ld-header-btn--solid">
-              Đăng ký
-            </Link>
+            {isAuthed ? (
+              <div className="ld-user-chip">
+                <div className="ld-user-avatar">
+                  {fullName ? fullName.charAt(0).toUpperCase() : "U"}
+                </div>
+                <div className="ld-user-info">
+                  <div className="ld-user-name">{fullName || "Người dùng"}</div>
+                  <button type="button" className="ld-user-logout" onClick={logout}>
+                    Đăng xuất
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <Link to="/login" className="ld-header-btn ld-header-btn--ghost">
+                  Đăng nhập
+                </Link>
+                <Link to="/register" className="ld-header-btn ld-header-btn--solid">
+                  Đăng ký
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>

@@ -767,51 +767,61 @@ const handleNextPage = () => {
           </div>
         </div>
       </div>
-<footer 
-  className="w3l-footer-29-main" 
-  style={{ background: '#FFEEEB' }}
->  <div className="footer-29 pt-5 pb-4">
-    <div className="container pt-md-4">
-      <div className="row footer-top-29">
+<footer className="ld-footer">
+        <div className="ld-footer-inner">
+          <div className="ld-footer-col">
+            <h4>Trung tâm tổng đài & CSKH</h4>
+            <div className="ld-footer-phone">1900 0000</div>
+            <p className="ld-footer-text">
+              CÔNG TY CỔ PHẦN XE KHÁCH LONG DISTANCE BUS
+            </p>
+            <p className="ld-footer-text">
+              Địa chỉ: 123 Đường Quốc Lộ, Quận 7, TP. Hồ Chí Minh, Việt Nam
+            </p>
+            <p className="ld-footer-text">
+              Email: <a href="mailto:support@longdistancebus.vn">support@longdistancebus.vn</a>
+            </p>
+          </div>
 
-        {/* Cột 1 */}
-        <div className="col-lg-4 col-md-6 footer-list-29">
-          <h6 className="footer-title-29">Thông tin liên lạc</h6>
-          <p className="mb-2 pe-xl-5">Địa chỉ: 130 Cô Bắc Q1 TPHCM</p>
-          <p className="mb-2">Số điện thoại : (028)45.735.921</p>
-          <p className="mb-2">Email : KonohaMarket@gmail.com</p>
+          <div className="ld-footer-col">
+            <h4>Long Distance Bus</h4>
+            <ul>
+              <li>Về chúng tôi</li>
+              <li>Lịch trình</li>
+              <li>Tuyển dụng</li>
+              <li>Tin tức & sự kiện</li>
+            </ul>
+          </div>
+
+          <div className="ld-footer-col">
+            <h4>Hỗ trợ</h4>
+            <ul>
+              <li>Tra cứu thông tin đặt vé</li>
+              <li>Điều khoản sử dụng</li>
+              <li>Câu hỏi thường gặp</li>
+              <li>Hướng dẫn đặt vé trên web</li>
+            </ul>
+          </div>
+
+          <div className="ld-footer-col">
+            <h4>Tải app Long Distance Bus</h4>
+            <div className="ld-footer-apps">
+              <button className="ld-app-btn">CH Play</button>
+              <button className="ld-app-btn">App Store</button>
+            </div>
+            <p className="ld-footer-text">Kết nối với chúng tôi</p>
+            <div className="ld-footer-social">
+              <span>𝕗</span>
+              <span>▶</span>
+              <span>📷</span>
+            </div>
+          </div>
         </div>
 
-        {/* Cột 2 */}
-        <div className="col-lg-4 col-md-6 col-sm-8 footer-list-29 mt-lg-0 mt-4 ps-lg-5">
-          <h6 className="footer-title-29">Lời nhắn</h6>
-          <p className="mt-3">
-            Nếu cửa hàng chúng tôi làm gì sai thì mong quý khách thông cảm
-          </p>
+        <div className="ld-footer-bottom">
+          © {new Date().getFullYear()} Long Distance Bus — Chất lượng là danh dự
         </div>
-
-        {/* Cột 3 (ảnh) */}
-        <div
-          className="col-lg-2 col-md-3 col-6 ps-lg-5 ps-lg-4 footer-list-29 mt-md-0 mt-4"
-          style={{ display: "flex", marginLeft: "80px" }}
-        >
-          <img
-            src=""
-            alt=""
-            style={{ width: "200px", height: "150px" }}
-          />
-
-          <img
-            src=""
-            alt=""
-            style={{ width: "95px", height: "79px", marginTop: "-28px" }}
-          />
-        </div>
-
-      </div>
-    </div>
-  </div>
-</footer>
+      </footer>
 
     </div>
   );

@@ -1,0 +1,52 @@
+.operator-summary-card {
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	border-radius: 12px;
+	padding: 24px;
+	margin: 0 30px 24px 30px;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.operator-summary-card h3 {
+	margin: 0 0 12px 0;
+	font-size: 20px;
+	font-weight: 600;
+	color: #333;
+}
+
+.operator-summary-card p {
+	margin: 0 0 12px 0;
+	color: #555;
+	line-height: 1.5;
+}
+
+.operator-summary-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.operator-summary-list li {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 8px;
+	font-weight: 500;
+	color: #222;
+}
+
+.operator-side-note {
+	background: #fff7ec;
+	border: 1px solid #ffd4a2;
+	border-radius: 12px;
+	padding: 18px;
+	margin: 0 30px;
+	line-height: 1.5;
+	color: #7a3e00;
+}
+
+.operator-right-stack {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+

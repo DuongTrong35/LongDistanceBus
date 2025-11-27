@@ -3,30 +3,6 @@
     box-sizing: border-box;
     padding: 0;
 }
-.HomeContainer{
-    width: 100%;
-    height: 1000px;
-}
-.HomeContainer .HomeBanner{
-    background:orange;
-        height: 200px;
-
-}
-.HomeContainer .HomeCenter{
-    height: 1500px;
-    background: burlywood;
-    width: 100%;
-    display: flex;
-}
-.HomeContainer .HomeCenter .HomeLeft{
-    background: #F4F4F4;
-    width: 70%;
-}
-.HomeContainer .HomeCenter  .HomeRight{
-    background: #F4F4F4;
-    width: 30%;
-}
-
 .seat-container {
     width: 750px;
   border: 1px solid #e5e5e5;
@@ -475,69 +451,6 @@ margin-right: 70px;
   margin: 10px 0;
 }
 /* ---------------------------------------------------------- */
-.header-wrapper {
-width: 100%;
-background: linear-gradient(135deg, #ff7a00, #ff4b00);
-padding: 12px 0;
-display: flex;
-justify-content: center;
-color: white;
-}
-
-
-.header-inner {
-width: 95%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-}
-
-
-.header-left, .header-right {
-display: flex;
-gap: 20px;
-align-items: center;
-}
-
-
-.lang, .app-download, .profile {
-display: flex;
-align-items: center;
-gap: 6px;
-font-size: 15px;
-cursor: pointer;
-}
-
-
-.header-center {
-text-align: center;
-max-width: 450px;
-}
-
-
-.futa-logo {
-height: 55px;
-margin-bottom: 5px;
-}
-
-
-.route {
-font-size: 24px;
-margin: 0;
-font-weight: bold;
-}
-
-
-.date {
-margin: 0;
-font-size: 16px;
-opacity: 0.9;
-}
-
-
-.avatar {
-font-size: 22px;
-}
 .blockquote-footer {
     margin-top: -1rem;
     margin-bottom: 1rem;

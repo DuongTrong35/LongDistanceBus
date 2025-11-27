@@ -31,25 +31,27 @@ export default function App() {
 			<Route>
 				<Route path="/" element={<Home />} />
 				<Route path="/trips" element={<Trips />} />
-				{/* <Route path="/trips/:id" element={<TripDetail />} /> */}
+				<Route path="/trips/:id" element={<TripDetail />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/forgot" element={<Forgot />} />
 				<Route path="/support" element={<Support />} />
+			<Route element={<AppShell />}>
 				<Route path="/employee" element={<Staff />} />
 				<Route path="/employee/addemployee" element={<AddStaff />} />
 				<Route path="/employee/updateemployee" element={<UpdateStaff />} />
 				<Route path="/operators" element={<Operators />} />
 				<Route path="/operators/addoperator" element={<AddOperator />} />
 				<Route path="/operators/updateoperator" element={<UpdateOperator />} />
+			</Route>
 				<Route path="/test" element={<SeatSelection />} />
 				<Route path="/ride" element={<FindRide />} />
 				<Route path="/tt" element={<Testthanhtoan />} />
 				<Route path="/cd" element={<Anyroute />} />
 
 				{/* Example: protect booking detail if needed */}
-				{/* <Route path="/secure/trips" element={<RequireAuth><Trips/></RequireAuth>} />
-				<Route path="/secure/trips/:id" element={<RequireAuth><TripDetail/></RequireAuth>} /> */}
+				<Route path="/secure/trips" element={<RequireAuth><Trips/></RequireAuth>} />
+				<Route path="/secure/trips/:id" element={<RequireAuth><TripDetail/></RequireAuth>} />
 			</Route>
 		</Routes>
 	);

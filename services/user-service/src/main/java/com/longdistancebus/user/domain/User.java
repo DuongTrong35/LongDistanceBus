@@ -1,57 +1,120 @@
 package com.longdistancebus.user.domain;
 
 import jakarta.persistence.*;
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_users_phone", columnNames = "phone")
+        }
+)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 20)
-    private String phoneNumber; // Sử dụng số điện thoại thay vì email
-
-    @Column(name = "password_hash", nullable = false, length = 255)
-    private String passwordHash;
-
-    @Column(name = "full_name")
+    @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
 
-    @Column(length = 20, nullable = false)
-    private String status = "ACTIVE";
+    @Column(name = "phone", nullable = false, length = 20)
+    private String phone;
 
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt = Instant.now();
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+    @Column(name = "locked", nullable = false)
+    private boolean locked = false;
 
-    public User() {}
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled = false;
 
-    // getters & setters
-    public Long getId() { return id; }
-    public String getPhoneNumber() { return phoneNumber; }  // Trả về số điện thoại thay vì email
-    public String getPasswordHash() { return passwordHash; }
-    public String getFullName() { return fullName; }
-    public String getStatus() { return status; }
-    public Instant getCreatedAt() { return createdAt; }
-    public Set<Role> getRoles() { return roles; }
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    public void setId(Long id) { this.id = id; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }  // Sửa lại theo số điện thoại
-    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
-    public void setStatus(String status) { this.status = status; }
-    public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
-    public void setRoles(Set<Role> roles) { this.roles = roles; }
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    public User() {
+    }
+
+    // GETTER & SETTER
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

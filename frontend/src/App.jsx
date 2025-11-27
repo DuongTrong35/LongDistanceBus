@@ -13,6 +13,9 @@ import AppShell from "./components/AppShell";
 import Staff from "./pages/Staff/Staff";
 import AddStaff from "./pages/Staff/AddStaff"
 import UpdateStaff from "./pages/Staff/UpdateStaff"
+import Operators from "./pages/Operators/Operators";
+import AddOperator from "./pages/Operators/AddOperator";
+import UpdateOperator from "./pages/Operators/UpdateOperator";
 import SeatSelection from "./pages/FindRide/SeatSelection"
 import FindRide from "./pages/FindRide/FindRide"
 import Support from "./pages/Support/Support";
@@ -36,6 +39,9 @@ export default function App() {
 				<Route path="/employee" element={<Staff />} />
 				<Route path="/employee/addemployee" element={<AddStaff />} />
 				<Route path="/employee/updateemployee" element={<UpdateStaff />} />
+				<Route path="/operators" element={<Operators />} />
+				<Route path="/operators/addoperator" element={<AddOperator />} />
+				<Route path="/operators/updateoperator" element={<UpdateOperator />} />
 				<Route path="/test" element={<SeatSelection />} />
 				<Route path="/ride" element={<FindRide />} />
 				<Route path="/tt" element={<Testthanhtoan />} />

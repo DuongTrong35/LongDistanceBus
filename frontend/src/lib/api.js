@@ -25,8 +25,10 @@ http.interceptors.request.use((config) => {
 /** ===== Auth APIs ===== */
 export async function loginApi(payload) {
   const res = await http.post("/api/auth/login", payload);
-  if (res?.data?.accessToken) setToken(res.data.accessToken);
-  return res.data; // { accessToken, tokenType, ... }
+  if (res?.data?.accessToken) {
+    setToken(res.data.accessToken);
+  }
+  return res.data;
 }
 
 export async function fetchProfile() {
@@ -38,6 +40,32 @@ export async function registerApi(payload) {
   const res = await http.post("/api/auth/register", payload);
   return res.data;
 }
+
+export async function verifyOtpApi(payload) {
+  const res = await http.post("/api/auth/verify-otp", payload);
+  return res.data;
+}
+
+export async function forgotPasswordApi(phone) {
+  const res = await http.post("/api/auth/forgot-password", { phone });
+  return res.data;
+}
+
+export async function resetPasswordApi(payload) {
+  const res = await http.post("/api/auth/reset-password", payload);
+  return res.data;
+}
+
+export async function changePasswordApi(payload) {
+  const res = await http.post("/api/auth/change-password", payload);
+  return res.data;
+}
+
+export async function updateProfileApi(payload) {
+  const res = await http.put("/api/auth/me", payload);
+  return res.data;
+}
+
 
 /** ===== Booking/Search/Home APIs ===== */
 export async function getStations() {

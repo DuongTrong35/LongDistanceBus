@@ -1,25 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Login.css";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function Login() {
   const { login: loginCtx } = useAuth();
   const nav = useNavigate();
   const loc = useLocation();
-  const [emailOrPhone, setEmailOrPhone] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (loc.state?.registrationSuccess) {
+      setSuccessMessage("Đăng ký thành công! Vui lòng đăng nhập.");
+      // Clear state so it doesn't persist on refresh
+      nav(loc.pathname, { replace: true, state: {} });
+    }
+  }, [loc, nav]);
 
   async function onSubmit(e) {
     e.preventDefault();
     setErr(null);
     setBusy(true);
     try {
-      await loginCtx(emailOrPhone, password);
+      await loginCtx(phone, password);
+      setSuccessMessage("Đăng nhập thành công! Đang chuyển hướng...");
       const redirect = loc.state?.from?.pathname || "/";
-      nav(redirect, { replace: true });
+      setTimeout(() => {
+        nav(redirect, { replace: true });
+      }, 1200);
     } catch (ex) {
       setErr(
         ex?.response?.data?.error ||
@@ -127,31 +141,44 @@ export default function Login() {
 
             <h2 className="auth-title">Đăng nhập tài khoản</h2>
             <p className="auth-subtitle">
-              Nhập số điện thoại hoặc email và mật khẩu để tiếp tục đặt vé.
+              Nhập số điện thoại và mật khẩu để tiếp tục đặt vé.
             </p>
+
+            {successMessage && (
+              <div className="auth-success-message">{successMessage}</div>
+            )}
 
             <form className="auth-form" onSubmit={onSubmit}>
               <div>
-                <div className="auth-label">Số điện thoại / Email</div>
+                <div className="auth-label">Số điện thoại</div>
                 <input
                   className="auth-input"
-                  placeholder="Nhập số điện thoại hoặc email"
-                  value={emailOrPhone}
-                  onChange={(e) => setEmailOrPhone(e.target.value)}
+                  placeholder="Nhập số điện thoại"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   required
                 />
               </div>
 
               <div>
                 <div className="auth-label">Mật khẩu</div>
-                <input
-                  className="auth-input"
-                  type="password"
-                  placeholder="Nhập mật khẩu"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="password-input-container">
+                  <input
+                    className="auth-input"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Nhập mật khẩu"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <button 
+                    type="button" 
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
               </div>
 
               {err && <div className="auth-error">{err}</div>}

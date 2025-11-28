@@ -1,5 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { loginApi, registerApi, clearToken, getToken, fetchProfile } from "../lib/api";
+import {
+  loginApi,
+  registerApi,
+  clearToken,
+  getToken,
+  fetchProfile,
+} from "../lib/api";
 
 const Ctx = createContext(null);
 
@@ -11,6 +17,7 @@ export function AuthProvider({ children }) {
     return cached ? JSON.parse(cached) : null;
   });
 
+  // Hydrate từ token khi load app
   useEffect(() => {
     async function hydrate() {
       if (!getToken()) return;
@@ -20,6 +27,10 @@ export function AuthProvider({ children }) {
           id: profile.userId ?? profile.id ?? null,
           fullName: profile.fullName ?? profile.email ?? null,
           phone: profile.phone ?? null,
+          email: profile.email ?? null,
+          dateOfBirth: profile.dateOfBirth ?? null,
+          gender: profile.gender ?? null,
+          avatar: profile.avatar ?? null,
         };
         setUser(hydrated);
         localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(hydrated));
@@ -32,13 +43,23 @@ export function AuthProvider({ children }) {
     hydrate();
   }, []);
 
+  // LOGIN: sau khi có token, gọi /me để lấy full profile
   async function login(phone, password) {
-    const res = await loginApi({ phone, password });
+    const res = await loginApi({ phone, password }); // loginApi tự set token
+
+    // Lấy profile đầy đủ từ backend
+    const profile = await fetchProfile();
+
     const loggedInUser = {
-      id: res.userId ?? null,
-      fullName: res.fullName ?? null,
-      phone: res.phone ?? phone ?? null,
+      id: profile.userId ?? profile.id ?? res.userId ?? null,
+      fullName: profile.fullName ?? res.fullName ?? null,
+      phone: profile.phone ?? res.phone ?? phone ?? null,
+      email: profile.email ?? null,
+      dateOfBirth: profile.dateOfBirth ?? null,
+      gender: profile.gender ?? null,
+      avatar: profile.avatar ?? null,
     };
+
     localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(loggedInUser));
     setUser(loggedInUser);
   }
@@ -53,16 +74,28 @@ export function AuthProvider({ children }) {
     setUser(null);
   }
 
+  // cho Person.jsx cập nhật lại context (tên, ngày sinh, giới tính, email, avatar…)
+  function updateUser(partial) {
+    setUser((prev) => {
+      const next = { ...(prev || {}), ...partial };
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+  }
+
   return (
     <Ctx.Provider
       value={{
         user,
         userId: user?.id ?? null,
         fullName: user?.fullName ?? null,
+        phone: user?.phone ?? null,
+        email: user?.email ?? null,
         isAuthed: !!user,
         login,
         register,
         logout,
+        updateUser,
       }}
     >
       {children}
@@ -75,4 +108,3 @@ export function useAuth() {
   if (!ctx) throw new Error("AuthContext missing");
   return ctx;
 }
-

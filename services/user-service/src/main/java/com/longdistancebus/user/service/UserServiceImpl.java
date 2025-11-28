@@ -9,6 +9,8 @@ import com.longdistancebus.user.api.dto.ResetPasswordRequest;
 import com.longdistancebus.user.domain.User;
 import com.longdistancebus.user.repo.UserRepository;
 import org.springframework.stereotype.Service;
+import com.longdistancebus.user.api.dto.ChangePasswordRequest;
+import com.longdistancebus.user.api.dto.UpdateProfileRequest;
 
 import java.util.Map;
 import java.util.Optional;
@@ -67,6 +69,36 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+@Override
+public User updateProfile(User user, UpdateProfileRequest request) {
+    if (request.getFullName() != null) {
+        String name = request.getFullName().trim();
+        if (!name.isBlank()) {
+            user.setFullName(name);
+        }
+    }
+
+    if (request.getDateOfBirth() != null) {
+        user.setDateOfBirth(request.getDateOfBirth());
+    }
+
+    if (request.getGender() != null) {
+        user.setGender(request.getGender());
+    }
+
+    if (request.getAvatar() != null) {
+        user.setAvatar(request.getAvatar());
+    }
+
+    if (request.getEmail() != null) {
+        user.setEmail(request.getEmail());
+    }
+    
+    return userRepository.save(user);
+}
+
+
+
     @Override
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByPhone(request.getPhone())
@@ -100,19 +132,21 @@ public class UserServiceImpl implements UserService {
         }
         return userRepository.findByPhone(phone);
     }
-
+    
     @Override
-    public void requestPasswordReset(ForgotPasswordRequest request) {
-        String phone = request.getPhone();
-        User user = userRepository.findByPhone(phone)
-                .orElseThrow(() -> new IllegalStateException("Số điện thoại chưa được đăng ký"));
+    public String requestPasswordReset(ForgotPasswordRequest request) {
+    String phone = request.getPhone();
+    User user = userRepository.findByPhone(phone)
+            .orElseThrow(() -> new IllegalStateException("Số điện thoại chưa được đăng ký"));
 
-        if (!user.isEnabled()) {
-            throw new IllegalStateException("Tài khoản chưa được kích hoạt");
-        }
-
-        otpService.generateAndSendOtp(phone);
+    if (!user.isEnabled()) {
+        throw new IllegalStateException("Tài khoản chưa được kích hoạt");
     }
+
+    otpService.generateAndSendOtp(phone);
+    return otpService.peekOtp(phone); // trả OTP cho controller sử dụng
+}
+
 
     @Override
     public void resetPassword(ResetPasswordRequest request) {
@@ -127,4 +161,19 @@ public class UserServiceImpl implements UserService {
         user.setPassword(request.getNewPassword());
         userRepository.save(user);
     }
+
+    @Override
+    public void changePassword(User user, ChangePasswordRequest request) {
+        if (!user.getPassword().equals(request.getOldPassword())) {
+            throw new IllegalStateException("Mật khẩu cũ không đúng");
+        }
+
+        if (request.getNewPassword() == null || request.getNewPassword().isBlank()) {
+            throw new IllegalStateException("Mật khẩu mới không được để trống");
+        }
+
+        user.setPassword(request.getNewPassword());
+        userRepository.save(user);
+    }
+
 }

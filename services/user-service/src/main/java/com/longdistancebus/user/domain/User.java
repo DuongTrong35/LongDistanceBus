@@ -2,6 +2,7 @@ package com.longdistancebus.user.domain;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(
@@ -36,6 +37,18 @@ public class User {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "avatar", columnDefinition = "MEDIUMTEXT")
+    private String avatar;
+
+    @Column(name = "email", length = 255)
+    private String email;
 
     public User() {
     }
@@ -74,6 +87,14 @@ public class User {
         this.password = password;
     }
 
+    public String getAvatar() {
+    return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public boolean isLocked() {
         return locked;
     }
@@ -100,6 +121,30 @@ public class User {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {

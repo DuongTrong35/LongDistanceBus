@@ -17,6 +17,7 @@ import UpdateStaff from "./pages/Staff/UpdateStaff"
 import SeatSelection from "./pages/FindRide/SeatSelection"
 import FindRide from "./pages/FindRide/FindRide"
 import Support from "./pages/Support/Support";
+import Person from "./pages/Person/Person";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css"; // nếu muốn xài icon
@@ -34,6 +35,7 @@ export default function App() {
 				<Route path="/forgot" element={<Forgot />} />
 				<Route path="/support" element={<Support />} />
 				<Route path="/news" element={<News />} />
+				<Route path="/person" element={<RequireAuth><Person /></RequireAuth>} />
 				<Route path="/employee" element={<Staff />} />
 				<Route path="/employee/addemployee" element={<AddStaff />} />
 				<Route path="/employee/updateemployee" element={<UpdateStaff />} />

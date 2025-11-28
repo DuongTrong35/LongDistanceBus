@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "./Login.css";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function Login() {
   const { login: loginCtx } = useAuth();
@@ -12,6 +13,7 @@ export default function Login() {
   const [err, setErr] = useState(null);
   const [busy, setBusy] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (loc.state?.registrationSuccess) {
@@ -160,14 +162,23 @@ export default function Login() {
 
               <div>
                 <div className="auth-label">Mật khẩu</div>
-                <input
-                  className="auth-input"
-                  type="password"
-                  placeholder="Nhập mật khẩu"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="password-input-container">
+                  <input
+                    className="auth-input"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Nhập mật khẩu"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <button 
+                    type="button" 
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
               </div>
 
               {err && <div className="auth-error">{err}</div>}

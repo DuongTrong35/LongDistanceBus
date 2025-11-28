@@ -60,8 +60,8 @@ desktop.ini
 *.sql.backup
 
 # Application properties (sensitive data - database credentials, JWT keys)
-**/application.properties
-**/application-*.properties
+#**/application.properties
+#**/application-*.properties
 **/application-*.local.properties
 **/application-*.local.yml
 

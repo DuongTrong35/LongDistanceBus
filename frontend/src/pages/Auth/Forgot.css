@@ -70,3 +70,12 @@
   transform: translateY(0) scale(1.02);
   box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
 }
+
+.otp-hint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #0f62fe;
+  background: #e0f2fe;
+  border-radius: 8px;
+  padding: 6px 10px;
+}

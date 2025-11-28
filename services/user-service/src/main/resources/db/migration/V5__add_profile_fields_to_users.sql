@@ -1,0 +1,3 @@
+ALTER TABLE users
+  ADD COLUMN date_of_birth DATE NULL,
+  ADD COLUMN gender VARCHAR(16) NULL;

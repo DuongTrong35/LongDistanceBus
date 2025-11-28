@@ -46,6 +46,27 @@ export async function verifyOtpApi(payload) {
   return res.data;
 }
 
+export async function forgotPasswordApi(phone) {
+  const res = await http.post("/api/auth/forgot-password", { phone });
+  return res.data;
+}
+
+export async function resetPasswordApi(payload) {
+  const res = await http.post("/api/auth/reset-password", payload);
+  return res.data;
+}
+
+export async function changePasswordApi(payload) {
+  const res = await http.post("/api/auth/change-password", payload);
+  return res.data;
+}
+
+export async function updateProfileApi(payload) {
+  const res = await http.put("/api/auth/me", payload);
+  return res.data;
+}
+
+
 /** ===== Booking/Search/Home APIs ===== */
 export async function getStations() {
   // Nếu backend đã có endpoint:

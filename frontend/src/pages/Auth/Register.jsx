@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./Register.css";
 import axios from "axios";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 axios.defaults.withCredentials = true;
 
@@ -17,6 +18,8 @@ export default function Register() {
   const [successMessage, setSuccessMessage] = useState("");
   const [autoFilled, setAutoFilled] = useState(false);
   const [verifying, setVerifying] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // --- Validate ---
   const validatePhone = (phone) => {
@@ -267,14 +270,23 @@ export default function Register() {
 
                 <div>
                   <div className="auth-label">Mật khẩu</div>
-                  <input
-                    className="auth-input"
-                    type="password"
-                    placeholder="Tạo mật khẩu"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                  <div className="password-input-container">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="auth-input"
+                      placeholder="Tạo mật khẩu"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <button 
+                      type="button" 
+                      className="password-toggle"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <FiEyeOff /> : <FiEye />}
+                    </button>
+                  </div>
                 </div>
 
                 {err && <div className="auth-error">{err}</div>}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import { useAuth } from "../../context/AuthContext";
@@ -40,7 +40,10 @@ export default function Home() {
   const [departDate, setDepartDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [seats, setSeats] = useState(1);
-  const { isAuthed, fullName, logout } = useAuth();
+  const { isAuthed, fullName, user, logout } = useAuth();
+  const [avatarPreview, setAvatarPreview] = useState(user?.avatar || null);
+  const fileInputRef = useRef(null);
+  const nav = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -100,13 +103,28 @@ export default function Home() {
 
           <div className="ld-header-auth">
             {isAuthed ? (
-              <div className="ld-user-chip">
+              <div
+                className="ld-user-chip"
+                onClick={() => nav("/person")}  // bấm vào chip => sang trang Person
+              >
                 <div className="ld-user-avatar">
-                  {fullName ? fullName.charAt(0).toUpperCase() : "U"}
-                </div>
+                    {user?.avatar ? (
+                      <img src={user.avatar} alt={fullName || "Avatar"} />
+                    ) : (
+                      fullName ? fullName.charAt(0).toUpperCase() : "U"
+                    )}
+                  </div>
+
                 <div className="ld-user-info">
                   <div className="ld-user-name">{fullName || "Người dùng"}</div>
-                  <button type="button" className="ld-user-logout" onClick={logout}>
+                  <button
+                    type="button"
+                    className="ld-user-logout"
+                    onClick={(e) => {
+                      e.stopPropagation(); // không bị redirect khi bấm Đăng xuất
+                      logout();
+                    }}
+                  >
                     Đăng xuất
                   </button>
                 </div>
@@ -121,8 +139,9 @@ export default function Home() {
                 </Link>
               </>
             )}
+                    </div>
+
           </div>
-        </div>
       </header>
 
       <main className="ld-main">
